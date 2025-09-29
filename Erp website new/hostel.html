@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hostel ERP Portal</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ===== Base ===== */
+    :root{
+      --accent:#0b63d8;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --danger:#e74c3c;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,Segoe UI,Roboto,Arial;
+      background:var(--bg);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+
+    /* ===== Layout ===== */
+    .app {
+      display:flex;
+      min-height:100vh;
+      gap:20px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width:260px;
+      background: linear-gradient(180deg,#052c6b 0%, var(--accent) 100%);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      padding:18px;
+      transition:width .22s ease, transform .22s ease;
+      min-height:100vh;
+      position:relative;
+    }
+    .sidebar.collapsed { width:72px; }
+    .sidebar .sidebar-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .sidebar .sidebar-header h2{font-size:18px;margin:0;font-weight:600}
+    .sidebar .sidebar-header i{font-size:20px}
+
+    .sidebar-nav{
+      list-style:none;
+      padding:0;
+      margin:8px 0 12px 0;
+      flex:0 0 auto;
+    }
+    .sidebar-nav li{margin:6px 0}
+    .nav-link{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      color:rgba(255,255,255,0.92);
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:8px;
+      transition:background .12s, color .12s;
+      font-weight:500;
+    }
+    .nav-link i{width:20px;text-align:center}
+    .nav-link:hover{background:rgba(255,255,255,0.06)}
+    .nav-link.active{background:rgba(0,0,0,0.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02)}
+
+    /* Sidebar Footer */
+    .sidebar-footer{
+      margin-top:auto;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      text-align:center;
+    }
+    .portal-name{font-weight:600;margin:6px 0}
+    .sidebar-footer small{display:block;color:rgba(255,255,255,0.75)}
+    .logout-btn{
+      margin-top:8px;
+      background:transparent;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.12);
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .logout-btn:hover{background:rgba(255,255,255,0.06)}
+
+    /* Main content */
+    .main {
+      flex:1;
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    header.app-header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+    }
+    .left {
+      display:flex;align-items:center;gap:14px;
+    }
+    .toggle-btn{
+      background:var(--card);
+      border:none;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(11,99,216,0.06);
+    }
+    .page-title h1{margin:0;font-size:20px}
+    .page-title p{margin:0;color:var(--muted);font-size:13px}
+
+    /* Grid */
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:18px;
+      align-items:start;
+    }
+
+    .summary-cards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:10px;
+      padding:14px;
+      box-shadow: 0 8px 24px rgba(12,24,50,0.04);
+    }
+    .summary-card{display:flex;gap:12px;align-items:center}
+    .card-icon{
+      width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,rgba(0,0,0,0.05),rgba(0,0,0,0.02));
+      font-size:20px;color:var(--accent);
+    }
+    .summary-card.blue .card-icon{color:#0b63d8}
+    .summary-card.green .card-icon{color:#16a34a}
+    .summary-card.purple .card-icon{color:#7c3aed}
+    .summary-card.orange .card-icon{color:#f59e0b}
+    .card-content h3{margin:0;font-size:20px}
+    .card-content p{margin:0;color:var(--muted);font-size:13px}
+
+    .activity-card .activity-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .activity-item{display:flex;gap:10px;align-items:flex-start}
+    .activity-dot{width:10px;height:10px;border-radius:50%;background:#0b63d8;margin-top:6px}
+
+    /* Table styles */
+    .table-container{overflow:auto}
+    table.data-table{width:100%;border-collapse:collapse}
+    table.data-table th, table.data-table td{padding:10px 8px;text-align:left;border-bottom:1px solid #eef1f6;font-size:13px}
+    table.data-table th{color:var(--muted);font-weight:600}
+
+    /* Sections */
+    .content-section{display:none}
+    .content-section.active{display:block}
+    .section-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .search-container{display:flex;align-items:center;gap:8px;background:#f3f5f9;padding:8px;border-radius:8px}
+    .search-input{border:none;background:transparent;outline:none;padding:4px 6px;font-size:13px}
+
+    /* Buttons */
+    .btn{border:none;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(11,99,216,0.12)}
+    .btn-secondary{background:#eef2ff;color:#111}
+
+    /* Modals */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:50;padding:16px}
+    .modal.open{display:flex}
+    .modal-content{background:var(--card);width:100%;max-width:820px;border-radius:10px;overflow:hidden}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid #f1f4f9}
+    .modal-body{padding:14px;display:grid;gap:10px}
+    .modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:12px;border-top:1px solid #f1f4f9}
+    .modal .form-row{display:flex;gap:10px}
+    .form-group{flex:1;display:flex;flex-direction:column;gap:6px}
+    .form-input,.form-select,.form-textarea{padding:8px;border-radius:8px;border:1px solid #e6e9f2;font-size:14px;outline:none}
+    .form-textarea{resize:vertical;min-height:80px}
+
+    /* Footer */
+    footer.app-footer{margin-top:auto;padding:12px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* Toast */
+    .toast{position:fixed;right:18px;bottom:18px;background:#111;color:#fff;padding:10px 14px;border-radius:8px;display:none;z-index:60}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .dashboard-grid{grid-template-columns:1fr}
+      .summary-cards{grid-template-columns:repeat(2,1fr)}
+      .sidebar{position:fixed;left:0;top:0;z-index:60;transform:translateX(0)}
+      .sidebar.hidden{transform:translateX(-120%)}
+      .app{padding-left:0}
+    }
+    @media (max-width:640px){
+      .summary-cards{grid-template-columns:repeat(1,1fr)}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <i class="fas fa-building"></i>
+        <h2>Hostel Admin</h2>
+      </div>
+
+      <ul class="sidebar-nav" id="sidebarNav">
+        <li><a href="#" class="nav-link active" id="nav-dashboard" onclick="showSection('dashboard-section')"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="#" class="nav-link" id="nav-students" onclick="showSection('students-section')"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="#" class="nav-link" id="nav-rooms" onclick="showSection('rooms-section')"><i class="fas fa-bed"></i> Rooms</a></li>
+        <li><a href="#" class="nav-link" id="nav-payments" onclick="showSection('payments-section')"><i class="fas fa-credit-card"></i> Payments</a></li>
+        <li><a href="#" class="nav-link" id="nav-complaints" onclick="showSection('complaints-section')"><i class="fas fa-exclamation-triangle"></i> Complaints</a></li>
+        <li><a href="#" class="nav-link" id="nav-staff" onclick="showSection('staff-section')"><i class="fas fa-user-tie"></i> Staff</a></li>
+        <li><a href="#" class="nav-link" id="nav-settings" onclick="showSection('settings-section')"><i class="fas fa-cog"></i> Settings</a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="portal-name">Hostel ERP Portal</div>
+        <small>© 2025 Atrij Ghosh</small>
+        <div style="margin-top:10px">
+          <button class="logout-btn" onclick="logout()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="app-header">
+        <div class="left">
+          <button class="toggle-btn" id="toggleBtn" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></button>
+          <div class="page-title">
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">Manage your hostel efficiently</p>
+          </div>
+        </div>
+        <div>
+          <small style="color:var(--muted)">Signed in as <strong>Atrij G.</strong></small>
+        </div>
+      </header>
+
+      <!-- Dashboard -->
+      <section id="dashboard-section" class="content-section active">
+        <div class="dashboard-grid">
+          <div>
+            <div class="summary-cards">
+              <div class="card summary-card blue">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <div class="card-content"><h3 id="totalStudents">0</h3><p>Total Students</p></div>
+              </div>
+              <div class="card summary-card green">
+                <div class="card-icon"><i class="fas fa-bed"></i></div>
+                <div class="card-content"><h3 id="totalRooms">0</h3><p>Total Rooms</p></div>
+              </div>
+              <div class="card summary-card purple">
+                <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                <div class="card-content"><h3 id="totalPayments">$0</h3><p>Total Payments</p></div>
+              </div>
+              <div class="card summary-card orange">
+                <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="card-content"><h3 id="totalComplaints">0</h3><p>Pending Complaints</p></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:12px">
+              <h3 style="margin:0 0 8px 0">Quick Actions</h3>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn btn-primary" onclick="openModal('student-modal')"><i class="fas fa-plus"></i> Add Student</button>
+                <button class="btn btn-primary" onclick="openModal('room-modal')"><i class="fas fa-plus"></i> Add Room</button>
+                <button class="btn btn-primary" onclick="openModal('payment-modal')"><i class="fas fa-plus"></i> Record Payment</button>
+                <button class="btn btn-primary" onclick="openModal('complaint-modal')"><i class="fas fa-plus"></i> Add Complaint</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card activity-card">
+            <h3 style="margin:0 0 8px 0">Recent Activity</h3>
+            <div id="activityList" class="activity-list">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Students Section -->
+      <section id="students-section" class="content-section">
+        <div class="section-header">
+          <h2>Students Management</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-container"><input id="studentsSearch" class="search-input" placeholder="Search students..."><i class="fas fa-search"></i></div>
+            <button class="btn btn-primary" onclick="openModal('student-modal')"><i class="fas fa-plus"></i> Add Student</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Room</th><th>Course</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="studentsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rooms Section -->
+      <section id="rooms-section" class="content-section">
+        <div class="section-header">
+          <h2>Rooms Management</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-container"><input id="roomsSearch" class="search-input" placeholder="Search rooms..."><i class="fas fa-search"></i></div>
+            <button class="btn btn-primary" onclick="openModal('room-modal')"><i class="fas fa-plus"></i> Add Room</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>Room</th><th>Type</th><th>Capacity</th><th>Occupied</th><th>Rent</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="roomsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payments Section -->
+      <section id="payments-section" class="content-section">
+        <div class="section-header">
+          <h2>Payments Management</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-container"><input id="paymentsSearch" class="search-input" placeholder="Search payments..."><i class="fas fa-search"></i></div>
+            <button class="btn btn-primary" onclick="openModal('payment-modal')"><i class="fas fa-plus"></i> Record Payment</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>Payment ID</th><th>Student</th><th>Room</th><th>Amount</th><th>Type</th><th>Date</th><th>Status</th></tr>
+              </thead>
+              <tbody id="paymentsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Complaints Section -->
+      <section id="complaints-section" class="content-section">
+        <div class="section-header">
+          <h2>Complaints Management</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-container"><input id="complaintsSearch" class="search-input" placeholder="Search complaints..."><i class="fas fa-search"></i></div>
+            <button class="btn btn-primary" onclick="openModal('complaint-modal')"><i class="fas fa-plus"></i> Add Complaint</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>ID</th><th>Student</th><th>Room</th><th>Category</th><th>Priority</th><th>Status</th><th>Date</th></tr>
+              </thead>
+              <tbody id="complaintsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Staff Section -->
+      <section id="staff-section" class="content-section">
+        <div class="section-header">
+          <h2>Staff Management</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-container"><input id="staffSearch" class="search-input" placeholder="Search staff..."><i class="fas fa-search"></i></div>
+            <button class="btn btn-primary" onclick="openModal('staff-modal')"><i class="fas fa-plus"></i> Add Staff</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>ID</th><th>Name</th><th>Position</th><th>Department</th><th>Phone</th><th>Email</th></tr>
+              </thead>
+              <tbody id="staffTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings-section" class="content-section">
+        <div class="section-header"><h2>Settings</h2></div>
+
+        <div class="card">
+          <h3>General Settings</h3>
+          <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap">
+            <input class="form-input" value="Sunrise Hostel" />
+            <input class="form-input" value="admin@sunrisehostel.com" />
+            <input class="form-input" value="+1 234 567 8900" />
+            <button class="btn btn-primary">Save Settings</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="app-footer">© 2025 Hostel ERP Portal — Developed by Atrij Ghosh</footer>
+    </main>
+  </div>
+
+  <!-- ===== Modals ===== -->
+  <!-- Student Modal -->
+  <div id="student-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="student-modal-title">Add Student</h3>
+        <button onclick="closeModal('student-modal')" class="toggle-btn" aria-label="Close">&times;</button>
+      </div>
+      <form id="student-form" class="modal-body">
+        <input type="hidden" id="student-id">
+        <div class="form-row">
+          <div class="form-group"><label>Full Name *</label><input id="student-name" class="form-input" required></div>
+          <div class="form-group"><label>Email *</label><input id="student-email" type="email" class="form-input" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Phone *</label><input id="student-phone" class="form-input" required></div>
+          <div class="form-group"><label>Room</label><input id="student-room-input" class="form-input"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Course</label><input id="student-course" class="form-input"></div>
+          <div class="form-group"><label>Year</label><input id="student-year" class="form-input"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('student-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Room Modal -->
+  <div id="room-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header"><h3>Add Room</h3><button onclick="closeModal('room-modal')" class="toggle-btn" aria-label="Close">&times;</button></div>
+      <form id="room-form" class="modal-body">
+        <div class="form-row">
+          <div class="form-group"><label>Room Number *</label><input id="room-number" class="form-input" required></div>
+          <div class="form-group"><label>Type *</label><select id="room-type" class="form-select"><option value="single">Single</option><option value="double">Double</option><option value="triple">Triple</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Capacity *</label><input id="room-capacity" type="number" min="1" class="form-input" value="1"></div>
+          <div class="form-group"><label>Monthly Rent ($)</label><input id="room-rent" type="number" class="form-input" value="0"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('room-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Room</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="payment-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header"><h3>Record Payment</h3><button onclick="closeModal('payment-modal')" class="toggle-btn" aria-label="Close">&times;</button></div>
+      <form id="payment-form" class="modal-body">
+        <div class="form-row">
+          <div class="form-group"><label>Student *</label><select id="payment-student" class="form-select"><option value="">Select</option></select></div>
+          <div class="form-group"><label>Amount ($) *</label><input id="payment-amount" type="number" class="form-input" value="0"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Type</label><select id="payment-type" class="form-select"><option value="rent">Rent</option><option value="deposit">Deposit</option><option value="fine">Fine</option></select></div>
+          <div class="form-group"><label>Status</label><select id="payment-status" class="form-select"><option>Completed</option><option>Pending</option></select></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('payment-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Complaint Modal -->
+  <div id="complaint-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header"><h3>Add Complaint</h3><button onclick="closeModal('complaint-modal')" class="toggle-btn" aria-label="Close">&times;</button></div>
+      <form id="complaint-form" class="modal-body">
+        <div class="form-row">
+          <div class="form-group"><label>Student</label><select id="complaint-student" class="form-select"><option value="">Select</option></select></div>
+          <div class="form-group"><label>Category</label><select id="complaint-category" class="form-select"><option>Maintenance</option><option>Cleanliness</option><option>Security</option><option>Other</option></select></div>
+        </div>
+        <div class="form-group"><label>Priority</label><select id="complaint-priority" class="form-select"><option>Low</option><option selected>Medium</option><option>High</option></select></div>
+        <div class="form-group"><label>Description</label><textarea id="complaint-desc" class="form-textarea"></textarea></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('complaint-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Complaint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Staff Modal -->
+  <div id="staff-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header"><h3>Add Staff</h3><button onclick="closeModal('staff-modal')" class="toggle-btn" aria-label="Close">&times;</button></div>
+      <form id="staff-form" class="modal-body">
+        <div class="form-row">
+          <div class="form-group"><label>Name</label><input id="staff-name" class="form-input"></div>
+          <div class="form-group"><label>Position</label><input id="staff-position" class="form-input"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Department</label><select id="staff-dept" class="form-select"><option>Administration</option><option>Maintenance</option><option>Security</option></select></div>
+          <div class="form-group"><label>Salary</label><input id="staff-salary" type="number" class="form-input" value="0"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('staff-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Staff</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // ===== Simple in-memory store =====
+    let students = [];
+    let rooms = [];
+    let payments = [];
+    let complaints = [];
+    let staff = [];
+
+    // UI helpers
+    const toastEl = document.getElementById('toast');
+    function showToast(msg, ms=2200){
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      setTimeout(()=> toastEl.style.display = 'none', ms);
+    }
+
+    // Navigation
+    function showSection(id){
+      // sections
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      const section = document.getElementById(id);
+      if(section) section.classList.add('active');
+
+      // nav links
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      const navId = 'nav-' + id.replace('-section','');
+      const activeNav = document.getElementById(navId);
+      if(activeNav) activeNav.classList.add('active');
+
+      // title
+      const title = document.getElementById('pageTitle');
+      const subtitle = document.getElementById('pageSubtitle');
+      const pretty = {
+        'dashboard-section':'Dashboard',
+        'students-section':'Students',
+        'rooms-section':'Rooms',
+        'payments-section':'Payments',
+        'complaints-section':'Complaints',
+        'staff-section':'Staff',
+        'settings-section':'Settings'
+      };
+      title.textContent = pretty[id] || 'Hostel ERP';
+      subtitle.textContent = 'Manage your ' + (pretty[id] || 'portal');
+    }
+
+    // Sidebar toggle (responsive)
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    toggleBtn.addEventListener('click', ()=>{
+      // collapse for large, hide for small
+      if(window.innerWidth > 1000) sidebar.classList.toggle('collapsed');
+      else sidebar.classList.toggle('hidden');
+    });
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth > 1000){
+        sidebar.classList.remove('hidden');
+      }
+    });
+
+    // Modals
+    function openModal(id){
+      document.getElementById(id).classList.add('open');
+      // populate selects where needed
+      refreshStudentSelects();
+    }
+    function closeModal(id){
+      document.getElementById(id).classList.remove('open');
+      // reset forms if needed
+      const form = document.querySelector('#'+id+' form');
+      if(form) form.reset();
+    }
+    // click outside modal close
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', (e)=>{
+        if(e.target === m) m.classList.remove('open');
+      });
+    });
+
+    // Logout
+    function logout(){
+      if(confirm('Logout from portal?')) {
+        showToast('Logged out');
+        // for demo, just show toast
+      }
+    }
+
+    // ===== Form handlers =====
+    // Students
+    document.getElementById('student-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('student-name').value.trim();
+      const email = document.getElementById('student-email').value.trim();
+      const phone = document.getElementById('student-phone').value.trim();
+      const room = document.getElementById('student-room-input').value.trim();
+      const course = document.getElementById('student-course').value.trim();
+      const year = document.getElementById('student-year').value.trim();
+      if(!name || !email){ showToast('Name and Email required'); return; }
+
+      const id = 'S' + (students.length+1).toString().padStart(3,'0');
+      const obj = {id,name,email,phone,room,course,year};
+      students.push(obj);
+      renderStudents();
+      closeModal('student-modal');
+      showToast('Student saved');
+      addActivity(`${name} added as student`);
+    });
+
+    // Rooms
+    document.getElementById('room-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const number = document.getElementById('room-number').value.trim();
+      const type = document.getElementById('room-type').value;
+      const capacity = +document.getElementById('room-capacity').value || 1;
+      const rent = +document.getElementById('room-rent').value || 0;
+      if(!number){ showToast('Room number required'); return; }
+      const exists = rooms.find(r => r.number === number);
+      if(exists){ showToast('Room already exists'); return; }
+      rooms.push({number,type,capacity,occupied:0,rent,status:'available'});
+      renderRooms();
+      closeModal('room-modal');
+      showToast('Room added');
+      addActivity(`Room ${number} created`);
+    });
+
+    // Payments
+    document.getElementById('payment-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const studentId = document.getElementById('payment-student').value;
+      const amount = +document.getElementById('payment-amount').value || 0;
+      const type = document.getElementById('payment-type').value;
+      const status = document.getElementById('payment-status').value;
+      if(!studentId || amount <= 0){ showToast('Select student and enter amount'); return; }
+      const pid = 'P' + (payments.length+1).toString().padStart(4,'0');
+      const student = students.find(s=>s.id===studentId);
+      payments.push({id:pid,student:student?student.name:studentId,room:student?student.room:'-',amount,type,date:new Date().toLocaleDateString(),status});
+      renderPayments();
+      closeModal('payment-modal');
+      showToast('Payment recorded');
+      addActivity(`Payment ${pid} recorded for ${student?student.name:studentId}`);
+    });
+
+    // Complaints
+    document.getElementById('complaint-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const studentId = document.getElementById('complaint-student').value;
+      const category = document.getElementById('complaint-category').value;
+      const priority = document.getElementById('complaint-priority').value;
+      const desc = document.getElementById('complaint-desc').value.trim();
+      const cid = 'C' + (complaints.length+1).toString().padStart(4,'0');
+      const student = students.find(s=>s.id===studentId);
+      complaints.push({id:cid,student:student?student.name:studentId,room:student?student.room:'-',category,priority,status:'Pending',date:new Date().toLocaleDateString(),desc});
+      renderComplaints();
+      closeModal('complaint-modal');
+      showToast('Complaint submitted');
+      addActivity(`Complaint ${cid} submitted`);
+    });
+
+    // Staff
+    document.getElementById('staff-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('staff-name').value.trim();
+      const position = document.getElementById('staff-position').value.trim();
+      const dept = document.getElementById('staff-dept').value;
+      const salary = +document.getElementById('staff-salary').value || 0;
+      const id = 'ST' + (staff.length+1).toString().padStart(3,'0');
+      staff.push({id,name,position,dept,salary});
+      renderStaff();
+      closeModal('staff-modal');
+      showToast('Staff added');
+      addActivity(`${name} added to staff`);
+    });
+
+    // ===== Render functions =====
+    function renderStudents(){
+      const tbody = document.getElementById('studentsTbody');
+      tbody.innerHTML = students.map(s => `
+        <tr>
+          <td>${s.id}</td>
+          <td>${s.name}</td>
+          <td>${s.email}</td>
+          <td>${s.phone}</td>
+          <td>${s.room || '-'}</td>
+          <td>${s.course || '-'}</td>
+        </tr>`).join('');
+      document.getElementById('totalStudents').textContent = students.length;
+      refreshStudentSelects();
+    }
+
+    function renderRooms(){
+      const tbody = document.getElementById('roomsTbody');
+      tbody.innerHTML = rooms.map(r => `
+        <tr>
+          <td>${r.number}</td>
+          <td>${r.type}</td>
+          <td>${r.capacity}</td>
+          <td>${r.occupied}</td>
+          <td>$${r.rent}</td>
+          <td>${r.status}</td>
+        </tr>`).join('');
+      document.getElementById('totalRooms').textContent = rooms.length;
+    }
+
+    function renderPayments(){
+      const tbody = document.getElementById('paymentsTbody');
+      tbody.innerHTML = payments.map(p => `
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.student}</td>
+          <td>${p.room}</td>
+          <td>$${p.amount}</td>
+          <td>${p.type}</td>
+          <td>${p.date}</td>
+          <td>${p.status}</td>
+        </tr>`).join('');
+      const total = payments.reduce((s,p)=> s + (+p.amount), 0);
+      document.getElementById('totalPayments').textContent = '$' + total.toFixed(2);
+    }
+
+    function renderComplaints(){
+      const tbody = document.getElementById('complaintsTbody');
+      tbody.innerHTML = complaints.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td>${c.student}</td>
+          <td>${c.room}</td>
+          <td>${c.category}</td>
+          <td>${c.priority}</td>
+          <td>${c.status}</td>
+          <td>${c.date}</td>
+        </tr>`).join('');
+      const openCount = complaints.filter(c=> c.status.toLowerCase() !== 'resolved').length;
+      document.getElementById('totalComplaints').textContent = openCount;
+    }
+
+    function renderStaff(){
+      const tbody = document.getElementById('staffTbody');
+      tbody.innerHTML = staff.map(s => `
+        <tr>
+          <td>${s.id}</td>
+          <td>${s.name}</td>
+          <td>${s.position}</td>
+          <td>${s.dept}</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>`).join('');
+    }
+
+    function refreshStudentSelects(){
+      // fill selects that need student list
+      const opts = [ '<option value="">Select</option>' ]
+        .concat(students.map(s=>`<option value="${s.id}">${s.id} — ${s.name}</option>`)).join('');
+      document.getElementById('payment-student').innerHTML = opts;
+      document.getElementById('complaint-student').innerHTML = opts;
+    }
+
+    // Recent activity
+    function addActivity(text){
+      const list = document.getElementById('activityList');
+      const el = document.createElement('div');
+      el.className = 'activity-item';
+      el.innerHTML = `<div class="activity-dot"></div><div><strong style="font-size:13px">${text}</strong><div style="color:var(--muted);font-size:12px">${new Date().toLocaleString()}</div></div>`;
+      list.prepend(el);
+      if(list.children.length > 8) list.removeChild(list.lastChild);
+    }
+
+    // Initial demo data
+    function seedDemo(){
+      rooms = [{number:'101',type:'single',capacity:1,occupied:1,rent:150,status:'occupied'},
+               {number:'102',type:'double',capacity:2,occupied:0,rent:220,status:'available'}];
+      students = [{id:'S001',name:'Rohit Sen',email:'rohit@example.com',phone:'9876543210',room:'101',course:'B.Tech',year:'2'}];
+      payments = [{id:'P0001',student:'Rohit Sen',room:'101',amount:150,type:'rent',date:new Date().toLocaleDateString(),status:'Completed'}];
+      complaints = [{id:'C0001',student:'Rohit Sen',room:'101',category:'Maintenance',priority:'Medium',status:'Pending',date:new Date().toLocaleDateString(),desc:'Fan not working'}];
+      staff = [{id:'ST001',name:'Mr. Saha',position:'Warden',dept:'Administration',salary:400}];
+
+      renderRooms(); renderStudents(); renderPayments(); renderComplaints(); renderStaff();
+      addActivity('Demo data loaded');
+    }
+
+    // Quick search hooks (basic)
+    document.getElementById('studentsSearch').addEventListener('input', function(){
+      const q = this.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('#studentsTbody tr');
+      rows.forEach(r => r.style.display = (r.textContent.toLowerCase().includes(q) ? '' : 'none'));
+    });
+    document.getElementById('roomsSearch').addEventListener('input', function(){
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('#roomsTbody tr').forEach(r => r.style.display = (r.textContent.toLowerCase().includes(q) ? '' : 'none'));
+    });
+    document.getElementById('paymentsSearch').addEventListener('input', function(){
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('#paymentsTbody tr').forEach(r => r.style.display = (r.textContent.toLowerCase().includes(q) ? '' : 'none'));
+    });
+    document.getElementById('complaintsSearch').addEventListener('input', function(){
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('#complaintsTbody tr').forEach(r => r.style.display = (r.textContent.toLowerCase().includes(q) ? '' : 'none'));
+    });
+    document.getElementById('staffSearch').addEventListener('input', function(){
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('#staffTbody tr').forEach(r => r.style.display = (r.textContent.toLowerCase().includes(q) ? '' : 'none'));
+    });
+
+    // on load
+    window.addEventListener('DOMContentLoaded', ()=>{
+      seedDemo();
+    });
+
+  </script>
+</body>
+</html>
