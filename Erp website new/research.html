@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAKAUT Research & Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --makaut-dark: #5d022b;
+            --makaut-gold: #ffcc00;
+            --makaut-light: #f4f7f6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--makaut-light);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--makaut-dark);
+            color: white;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Collapsible Section Styling */
+        .collapsible {
+            background-color: #ffffff;
+            color: var(--makaut-dark);
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.5em;
+            font-weight: 700;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-bottom: 3px solid var(--makaut-gold);
+            margin-top: 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        .active, .collapsible:hover {
+            background-color: #f0f0f0;
+        }
+        .collapsible:after {
+            content: '\002B'; /* Plus sign */
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--makaut-dark);
+        }
+        .active:after {
+            content: "\2212"; /* Minus sign */
+        }
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #ffffff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            margin-bottom: 25px;
+        }
+        .content p {
+            padding: 10px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Project Table Styling */
+        .project-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .project-table th, .project-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .project-table th {
+            background-color: var(--makaut-dark);
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .project-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .project-table tr:hover {
+            background-color: #fff4e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .project-table, .project-table tbody, .project-table td, .project-table th, .project-table tr {
+                display: block;
+            }
+            .project-table thead {
+                display: none;
+            }
+            .project-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+            }
+            .project-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .project-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 15px;
+                font-weight: 700;
+                color: var(--makaut-dark);
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MAKAUT Research & Development Cell</h1>
+        <p>A Hub for Innovation and Interdisciplinary Research</p>
+    </div>
+
+    <div class="container">
+
+        <div class="content" style="max-height: 500px; padding: 18px; margin-bottom: 25px; box-shadow: none; border-radius: 8px; background-color: #fff; display: block;">
+            <h2 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.5em;">Research Overview</h2>
+            <p style="font-style: normal; color: #333;">Maulana Abul Kalam Azad University of Technology (MAKAUT) encourages cutting-edge research across Engineering, Science, Technology, and Management domains. The research cell facilitates grants, collaborations, and publication activities for faculty and students, focusing on impactful, interdisciplinary projects with societal relevance. This page details key projects undertaken by the University.</p>
+        </div>
+
+
+        <button class="collapsible active">Completed Faculty Research Projects</button>
+        <div class="content" style="max-height: 1000px;">
+            <p>List of faculty research projects successfully completed under various institutional and external funding schemes (Sample Data).</p>
+            <table class="project-table">
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Principal Investigator (PI)</th>
+                        <th>Department</th>
+                        <th>Approved Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Project Title">Sensor Mobile Cloud Computing: Algorithm, Architecture & Applications</td>
+                        <td data-label="PI">Dr. Debashis De</td>
+                        <td data-label="Department">CSE & IT</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Fabrication of High Density Capacitor using Porous Silicon & High-K Material</td>
+                        <td data-label="PI">Dr. Madhumita Das Sarkar</td>
+                        <td data-label="Department">Microelectronics & VLSI</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Agricultural Disease Prediction to Increase Productivity</td>
+                        <td data-label="PI">Dr. Santanu Phadikar</td>
+                        <td data-label="Department">CSE & IT</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Investigation of physico-chemical properties of Carbon Based nanomaterials and its biological implications</td>
+                        <td data-label="PI">Dr. Jaya Bandyopadhya & Dr. Debashis De</td>
+                        <td data-label="Department">Biotechnology & CSE</td>
+                        <td data-label="Approved Date">08.07.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Social-Cost-Benefit Analysis of Privatisation of Engineering & Management Education in West Bengal</td>
+                        <td data-label="PI">Dr. Atri Bhowmik</td>
+                        <td data-label="Department">Finance & Management</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="collapsible">Ongoing Research & External Grants</button>
+        <div class="content">
+            <p>Current research activities and projects funded by various government and non-government agencies (e.g., DST, SERB, DBT).</p>
+            <table class="project-table">
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Principal Investigator (PI)</th>
+                        <th>Funding Agency</th>
+                        <th>Status / Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Project Title">Establishing importance of Wnt signaling in the maintenance of immune functions of Intestinal epithelial cells</td>
+                        <td data-label="PI">Dr. Debdut Naskar</td>
+                        <td data-label="Funding Agency">DST-Inspire Faculty Scheme</td>
+                        <td data-label="Status">Ongoing (Since 2017)</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Synthesis of aptamer producing plasmid for detection and novel drug delivery for Colorectal Cancer</td>
+                        <td data-label="PI">Dr. Debdut Naskar</td>
+                        <td data-label="Funding Agency">MAKAUT Seed Grant</td>
+                        <td data-label="Status">Ongoing (Since 2019)</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Bioremediation strategies based on the multi metal tolerance of a new bacterial isolate</td>
+                        <td data-label="PI">Dr. Rina Rani Ray</td>
+                        <td data-label="Funding Agency">DBT, West Bengal</td>
+                        <td data-label="Status">Ongoing (Since 2017)</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Design of anion-binding receptor based on 'CaNN' motif</td>
+                        <td data-label="PI">Dr. Raja Banerjee</td>
+                        <td data-label="Funding Agency">Institutional Support</td>
+                        <td data-label="Status">Ongoing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="collapsible">Student Research/Projects (TEQIP/RA/TA)</button>
+        <div class="content">
+            <p>A selection of innovative student projects supervised by MAKAUT faculty (Sample Data).</p>
+            <table class="project-table">
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Student Name</th>
+                        <th>Supervisor</th>
+                        <th>Approved Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Project Title">QoS Aware Offloading Strategies in Mobile Cloud Computing</td>
+                        <td data-label="Student Name">Deepsubhra Guha Roy</td>
+                        <td data-label="Supervisor">Dr. Debashis De</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Characterization of High Density Capacitor Based on Porous Silicon & High-K Material</td>
+                        <td data-label="Student Name">Prodip Mozumdar</td>
+                        <td data-label="Supervisor">Dr. Madhumita Das Sarkar</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Molecular study of miRNA regulation in Amyotrophic Lateral Sclerosis (ALS)</td>
+                        <td data-label="Student Name">Swagata Roy Chowdhury</td>
+                        <td data-label="Supervisor">Dr. Jaya Bandyopadhyay</td>
+                        <td data-label="Approved Date">08.07.2016</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Project Title">Cloud Forensic & its Security Enhancement</td>
+                        <td data-label="Student Name">Palash Santra</td>
+                        <td data-label="Supervisor">Dr. Koushik Majumder</td>
+                        <td data-label="Approved Date">16.06.2016</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript for Collapsible Sections
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    // Calculate and set max-height to smoothly open the content
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+
+</body>
+</html>

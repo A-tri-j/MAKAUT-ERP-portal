@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAKAUT In-house Fees Structure 2024-2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --makaut-dark: #5d022b; /* Deep Maroon/MAKAUT Color */
+            --makaut-gold: #ffcc00;
+            --makaut-blue: #1a73e8;
+            --background-light: #f4f7f6;
+            --shadow-subtle: rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Roboto', 'Open Sans', sans-serif;
+            background-color: var(--background-light);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--makaut-dark), #9a1e4a);
+            color: white;
+            box-shadow: 0 4px 10px var(--shadow-subtle);
+        }
+        .header h1 {
+            margin: 0 0 5px 0;
+            font-size: 2.5em;
+            font-weight: 900;
+        }
+        .header p {
+            font-size: 1.1em;
+            font-weight: 400;
+            color: var(--makaut-gold);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Information Box */
+        .info-box {
+            background-color: #ffeccf;
+            color: #8b6b00;
+            padding: 15px;
+            border-left: 5px solid var(--makaut-gold);
+            border-radius: 5px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Fee Table Styling */
+        .fee-table-section {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-subtle);
+            margin-bottom: 30px;
+        }
+        .fee-table-section h2 {
+            color: var(--makaut-dark);
+            border-bottom: 2px solid var(--makaut-blue);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .fee-table th, .fee-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .fee-table th {
+            background-color: var(--makaut-blue);
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.0em;
+        }
+        .fee-table td {
+             font-weight: 600;
+             color: #333;
+        }
+        .fee-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .fee-table tr:hover {
+            background-color: #f0f8ff;
+        }
+        .course-name {
+            font-weight: 700;
+            color: var(--makaut-dark);
+            text-align: left;
+        }
+        .amount {
+            font-family: 'Roboto', sans-serif;
+            text-align: right;
+        }
+
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 30px;
+            background-color: #e6f3ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px var(--shadow-subtle);
+        }
+        .download-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: white;
+            background-color: var(--makaut-dark);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+        .download-button:hover {
+            background-color: #9a1e4a;
+            transform: translateY(-2px);
+        }
+        .download-button i {
+            margin-right: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .fee-table-section {
+                padding: 15px;
+            }
+            .fee-table, .fee-table tbody, .fee-table tr, .fee-table td {
+                display: block;
+                width: 100%;
+            }
+            .fee-table thead {
+                display: none; /* Hide header row on small screens */
+            }
+            .fee-table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .fee-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+            }
+            .fee-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: calc(50% - 20px);
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 700;
+                color: var(--makaut-dark);
+                text-align: left;
+            }
+            .amount {
+                text-align: right; /* Ensure amount stays right-aligned */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MAKAUT (In-house) Fee Structure</h1>
+        <p>Maulana Abul Kalam Azad University of Technology, West Bengal | Academic Session: 2024-2025</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i> **Important Note:** This fee structure is strictly for **MAKAUT Main Campus (In-house Courses)**. Fees for affiliated colleges may vary significantly as per government/college regulations. Data is compiled from official MAKAUT sources.
+        </div>
+
+        <div class="fee-table-section">
+            <h2><i class="fas fa-university"></i> Summary of MAKAUT In-house Course Fees</h2>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Total Semesters</th>
+                        <th>Total Tuition Fee</th>
+                        <th>Total Fee at Admission* (1st Sem)</th>
+                        <th>Approx. Total Course Fee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**B.Tech** (CSE, IT, VLSI)</td>
+                        <td data-label="Total Semesters" class="amount">8</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹2,11,200</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹42,600</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹2,32,300</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**BCA** (Bachelor of Computer Applications)</td>
+                        <td data-label="Total Semesters" class="amount">8</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹1,55,200</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹34,200</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹1,76,300</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**BBA** (Bachelor of Business Administration)</td>
+                        <td data-label="Total Semesters" class="amount">8</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹1,55,200</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹34,200</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹1,76,300</td>
+                    </tr>
+                     <tr>
+                        <td data-label="Course Name" class="course-name">**B.Sc.** (Maths, Robotics, Psychology, etc.)</td>
+                        <td data-label="Total Semesters" class="amount">8</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹1,55,200</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹34,200</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹1,76,300</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**M.Tech** (All Branches)</td>
+                        <td data-label="Total Semesters" class="amount">4</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹72,000</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹32,700</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹86,800</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**MCA** (Master of Computer Applications)</td>
+                        <td data-label="Total Semesters" class="amount">4</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹80,000</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹34,700</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹94,800</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Course Name" class="course-name">**MBA** (Master of Business Administration)</td>
+                        <td data-label="Total Semesters" class="amount">4</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹1,60,000</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹54,700</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹1,74,800</td>
+                    </tr>
+                     <tr>
+                        <td data-label="Course Name" class="course-name">**M.Sc.** (Most Branches)</td>
+                        <td data-label="Total Semesters" class="amount">4</td>
+                        <td data-label="Total Tuition Fee" class="amount">₹80,000</td>
+                        <td data-label="Total Fee at Admission* (1st Sem)" class="amount">₹34,700</td>
+                        <td data-label="Approx. Total Course Fee" class="amount">₹94,800</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="margin-top: 25px; font-size: 1em; color: var(--makaut-dark); font-weight: 700;">
+                **(*) Total Fee at Admission:** This amount includes the first semester's tuition fee, Admission Fee, Caution Money (Refundable), Registration Fee, and other one-time charges. Subsequent semester fees will be lower.
+            </p>
+        </div>
+
+        <div class="download-section">
+            <p style="font-size: 1.2em; color: var(--makaut-dark); font-weight: 700;">For the complete semester-wise breakdown and detailed fee structure, please visit the official university page.</p>
+            <a href="https://makautwb.ac.in/page.php?id=220" target="_blank" class="download-button">
+                <i class="fas fa-file-pdf"></i> View Official Fee Structure
+            </a>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #666;">*The download link directs to the official MAKAUT Fees Page.*</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

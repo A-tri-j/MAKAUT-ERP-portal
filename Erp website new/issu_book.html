@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Library Management System (LMS)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== GLOBAL RESET & VARIABLES (MODIFIED) ===== */
+    :root{
+      --primary:#007bff;
+      --primary-dark:#0056b3;
+      --navy:#1a3c65; /* Darker, more professional blue */
+      --card-bg: #ffffff; /* Pure white for better contrast */
+      --muted:#6c757d;
+      --soft-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Softer shadow */
+      --max-width:1200px;
+      --dashboard-bg: #f9f9f9;
+      --sidebar-width: 250px;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body,#app{height:100%}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dashboard-bg);
+      color:#333;
+      line-height:1.6;
+    }
+    
+    /* Utility for hidden items */
+    .hidden { display: none !important; }
+
+    /* ===== LOGIN / SIGNUP BACKGROUND & LAYOUT (IMPROVED) ===== */
+    #login-page, #signup-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image:
+        linear-gradient(rgba(20,20,20,0.7), rgba(20,20,20,0.7)),
+        url('library-bg.jpg'); /* replace with your image file */
+      background-size: cover;
+      background-position: center;
+      padding-top: 20px;
+    }
+    .top-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 15px 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:16px;
+      z-index:20;
+    }
+    .top-header .right-links a{
+      color: #fff; text-decoration:none; margin-left:20px; font-weight:600;
+      padding: 5px 10px; border-radius: 5px; transition: background .2s;
+    }
+    .top-header .right-links a:hover{ background: rgba(255,255,255,0.1); }
+    
+    .login-content{
+      max-width: var(--max-width);
+      width: 90%;
+      margin: 60px auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 50px;
+      align-items:center;
+      flex: 1; /* Allows content to push footer down */
+    }
+
+    /* Left info panel (IMPROVED STYLING) */
+    .info-panel{
+      color:#fff;
+      padding: 30px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+    }
+    .info-panel h3{
+      font-size:22px;
+      margin-top:25px;
+      margin-bottom:12px;
+      border-bottom:3px solid var(--primary); /* Highlight with primary color */
+      padding-bottom:8px;
+      width:70%;
+      font-weight: 700;
+    }
+    .info-panel p{ margin:10px 0; opacity:0.95 }
+    .info-panel ul{ margin-left:20px; margin-top:10px; list-style: none; }
+    .info-panel li::before {
+        content: "📚"; /* Bullet icon */
+        margin-right: 10px;
+        color: var(--primary);
+        font-size: 14px;
+    }
+
+    /* Right panels (login/signup) (IMPROVED FORM) */
+    .login-panel{
+      background: var(--card-bg);
+      padding:40px;
+      border-radius:12px;
+      box-shadow: var(--soft-shadow);
+    }
+    .login-panel h2{
+      text-align:center;
+      color:var(--navy);
+      margin-bottom:30px;
+      font-weight: 600;
+    }
+    .login-panel label{ display:block; margin-bottom:8px; font-weight:600; color:#444; font-size: 14px; }
+    .login-panel input[type="text"], .login-panel input[type="password"], .login-panel input[type="email"], .login-panel input[type="number"]{
+      width:100%;
+      padding:14px 18px;
+      margin-bottom:20px;
+      border-radius:8px;
+      border:1px solid #e0e0e0;
+      font-size:16px;
+      transition: border-color .2s;
+    }
+    .login-panel input:focus{
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    }
+    .login-button{
+      display:block; /* full width button for login panel */
+      width: 100%;
+      background:linear-gradient(45deg, var(--primary), #00aaff);
+      color:white;
+      border:none;
+      padding:14px 20px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
+      font-size: 16px;
+      transition:all .2s ease;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    }
+    .login-button:hover{ background:var(--primary-dark); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5); }
+
+    .signup-link{
+      display: block;
+      text-align: center;
+      margin-top:20px; 
+      color:var(--primary); 
+      text-decoration:none; 
+      font-weight:600;
+      cursor:pointer;
+      font-size: 14px;
+    }
+
+    .error-message{
+      color:var(--danger); 
+      text-align:center; 
+      margin-bottom:15px; 
+      font-weight:600;
+      padding: 10px;
+      border-radius: 5px;
+      background: #ffe3e6;
+      display:none;
+      font-size: 14px;
+    }
+    #signup-message { background: #e6ffec; } /* Success message color */
+
+    /* ===== DASHBOARD PAGE (MAJOR CHANGES) ===== */
+    #dashboard-page{ 
+        display:none; 
+        min-height:100vh; 
+        background:var(--dashboard-bg);
+        display: flex; /* Setup for flex layout */
+    }
+
+    /* New Sidebar Menu */
+    .dashboard-sidebar {
+        width: var(--sidebar-width);
+        background: var(--navy);
+        color: #fff;
+        padding: 20px 0;
+        box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+    .sidebar-logo {
+        padding: 0 20px 20px 20px;
+        font-size: 20px;
+        font-weight: 700;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 20px;
+    }
+    .sidebar-menu a {
+        display: block;
+        color: #ddd;
+        text-decoration: none;
+        padding: 12px 20px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all .2s;
+        border-left: 4px solid transparent;
+    }
+    .sidebar-menu a:hover {
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+    }
+    .sidebar-menu a.active-menu {
+        background: rgba(0, 123, 255, 0.15);
+        color: #fff;
+        border-left-color: var(--primary);
+        font-weight: 600;
+    }
+    .sidebar-footer {
+        margin-top: auto;
+        padding: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        font-size: 13px;
+    }
+    .sidebar-footer strong { display: block; margin-bottom: 5px; }
+    .sidebar-footer a { color: var(--primary); text-decoration: none; }
+
+    /* Main Dashboard Content Area */
+    .dashboard-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .dashboard-header{ 
+        background:#fff; 
+        border-bottom:1px solid #e6e9ef; 
+        padding:15px 30px; 
+        display:flex; 
+        justify-content:flex-end; /* Push to right */
+        align-items:center; 
+        gap: 20px;
+    }
+    .welcome-info {
+        color:#555; 
+        font-size:14px;
+        display: flex;
+        gap: 15px;
+    }
+    .welcome-info strong { color: var(--navy); font-weight: 700; }
+    .logout-btn {
+        background: var(--danger);
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background .2s;
+    }
+    .logout-btn:hover { background: #c82333; }
+    
+    .main-content-area {
+        padding: 30px;
+        flex: 1;
+    }
+    .page-title {
+        font-size: 28px;
+        color: var(--navy);
+        margin-bottom: 25px;
+        font-weight: 700;
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 10px;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    /* CARD STYLING */
+    .card {
+        background: white; 
+        padding: 25px; 
+        border-radius: 12px; 
+        box-shadow: var(--soft-shadow); 
+        margin-bottom: 25px;
+    }
+    .card h2 { 
+        color: var(--navy); 
+        margin-bottom: 20px; 
+        font-weight: 600;
+        font-size: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Add Book Form */
+    .book-form{ 
+        display:grid; 
+        grid-template-columns: repeat(3,1fr); 
+        gap:20px; 
+        align-items:end;
+    }
+    .form-group{ display:flex; flex-direction:column }
+    .form-group label{ margin-bottom:8px; font-weight:600; color:#444; font-size: 14px; }
+    .form-group input, .form-group select { 
+        padding:12px; 
+        border-radius:8px; 
+        border:1px solid #d0d7de; 
+        font-size: 15px;
+    }
+    .add-book-btn{
+      grid-column: 1 / -1; 
+      justify-self:center; 
+      padding:12px 30px; 
+      border-radius:8px; 
+      background:var(--primary); 
+      color:#fff; 
+      border:none; 
+      font-weight:700; 
+      cursor:pointer;
+      font-size: 16px;
+      transition: background .2s;
+    }
+    .add-book-btn:hover { background: var(--primary-dark); }
+    #book-add-message{ text-align:center; margin-top:14px; font-weight:700; color:var(--success); min-height:20px }
+
+    /* Book/Issued Table Styling */
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .data-table th, .data-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+    .data-table th {
+        background-color: #f1f3f5;
+        color: var(--navy);
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+    .data-table tr:hover {
+        background-color: #fafafa;
+    }
+    .data-table .action-btn {
+        padding: 6px 10px;
+        border-radius: 5px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+        transition: background .2s;
+        margin: 2px 0;
+        display: inline-block;
+    }
+    .data-table .action-btn-return { background: var(--success); }
+    .data-table .action-btn-return:hover { background: #1e7e34; }
+    .data-table .action-btn-pay { background: var(--danger); }
+    .data-table .action-btn-pay:hover { background: #bd2130; }
+    .fine-label {
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        display: inline-block;
+    }
+    .fine-label.none { background: #e6ffec; color: var(--success); }
+    .fine-label.pending { background: #fff3cd; color: var(--warning); }
+    .fine-label.overdue { background: #f8d7da; color: var(--danger); }
+
+    /* Search Box */
+    .search-input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .search-input-group input {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+    }
+    .search-input-group button {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background .2s;
+    }
+    .search-input-group button:hover { background: var(--primary-dark); }
+    
+    /* Responsive */
+    @media (max-width: 940px){
+      .login-content{ grid-template-columns: 1fr; width: 95%; margin: 30px auto; }
+      .info-panel { display: none; }
+      .dashboard-sidebar { 
+          position: fixed; 
+          left: -250px; 
+          height: 100vh; 
+          z-index: 100;
+          transition: left 0.3s ease;
+      }
+      .dashboard-sidebar.open { left: 0; }
+      .dashboard-main { margin-left: 0; }
+      .dashboard-header { justify-content: space-between; padding: 10px 20px; }
+      .menu-toggle { display: block; }
+      .welcome-info { display: none; }
+      .book-form{ grid-template-columns: 1fr; }
+    }
+    @media (min-width: 941px) {
+        .menu-toggle { display: none; }
+    }
+    @media (max-width: 600px){
+      .top-header { font-size:14px; flex-direction:column; gap:8px; padding:12px }
+      .login-panel { padding: 30px 20px; }
+      .main-content-area { padding: 20px 10px; }
+      .data-table th, .data-table td { font-size: 12px; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <div id="login-page">
+      <div class="top-header">
+        <span style="font-weight:800; font-size: 20px;">📚 Library Management System</span>
+        <div class="right-links">
+          <a href="#" onclick="showPage('login-page');return false">Login</a>
+          <a href="#" onclick="showPage('signup-page');return false">Register</a>
+        </div>
+      </div>
+
+      <div class="login-content">
+        <div class="info-panel">
+          <h3>Welcome to Our Digital Library</h3>
+          <p>Manage your books, check your issue history, and track fines all in one place. </p>
+
+          <h3>Library Services</h3>
+          <ul>
+            <li>AC Reading Rooms</li>
+            <li>High-Speed Wi-fi</li>
+            <li>Group Discussion Areas</li>
+            <li>Extensive Book Collection</li>
+          </ul>
+        </div>
+
+        <div class="login-panel">
+          <h2>User Login</h2>
+          <p id="login-error" class="error-message">Invalid Email or Password.</p>
+
+          <form id="loginForm">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+            <button type="submit" class="login-button" style="margin-top:15px;">Login</button>
+            <a class="signup-link" href="#" onclick="showPage('signup-page'); return false;">Don't have an account? Register now!</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="signup-page" class="hidden">
+      <div class="top-header">
+        <span style="font-weight:800; font-size: 20px;">📚 Makaut Library Management System</span>
+        <div class="right-links">
+          <a href="#" onclick="showPage('login-page'); return false">Login</a>
+          <a href="#" onclick="showPage('signup-page'); return false">Register</a>
+        </div>
+      </div>
+
+      <div class="login-content">
+        <div class="info-panel">
+          <h3>Start Your Reading Journey</h3>
+          <p>Registering is quick and easy! Get instant access to our online catalogue.</p>
+          
+          <h3>Registration Benefits</h3>
+          <ul>
+            <li>Borrow Physical Books</li>
+            <li>Access Online E-Books</li>
+            <li>Track Your Reading History</li>
+            <li>Get Fine/Due Date Alerts</li>
+          </ul>
+        </div>
+
+        <div class="login-panel">
+          <h2>New User Registration</h2>
+          <p id="signup-message" class="error-message"></p>
+
+          <form id="signupForm">
+            <label for="regName">Full Name:</label>
+            <input type="text" id="regName" name="regName" required>
+
+            <label for="regEmail">Email ID:</label>
+            <input type="email" id="regEmail" name="regEmail" required>
+
+            <label for="regPassword">Password:</label>
+            <input type="password" id="regPassword" name="regPassword" required>
+
+            <label for="regConfirmPassword">Confirm Password:</label>
+            <input type="password" id="regConfirmPassword" name="regConfirmPassword" required>
+
+            <button type="submit" class="login-button" style="margin-top:15px;">Register</button>
+            <a class="signup-link" href="#" onclick="showPage('login-page'); return false;">Already have an account? Login here.</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard-page" class="hidden">
+        <div id="dashboardSidebar" class="dashboard-sidebar">
+            <div class="sidebar-logo">LMS User Portal</div>
+            <div class="sidebar-menu">
+                <a href="#" data-page-view="add-book" onclick="showDashboardView('add-book'); return false;" class="active-menu">📚 Add Book (Admin)</a>
+                <a href="#" data-page-view="search-book" onclick="showDashboardView('search-book'); renderBookListDashboard(); return false;">🔍 Book Search</a>
+                <a href="#" data-page-view="issued-book" onclick="showDashboardView('issued-book'); renderIssuedListDashboard(); return false;">🧾 Issued Book (Current)</a>
+                <a href="#" data-page-view="fine-details" onclick="showDashboardView('fine-details'); renderFineDetails(); return false;">💲 Fine Details</a>
+                <a href="#" data-page-view="history" onclick="showDashboardView('history'); renderIssuedHistory(); return false;">📜 Issue History</a>
+            </div>
+            <div class="sidebar-footer">
+                <strong>User: <span id="welcome-user">Admin</span></strong>
+                <small>Email: <span id="welcome-email">admin@gmail.com</span></small>
+            </div>
+        </div>
+        
+        <div class="dashboard-main">
+            <div class="dashboard-header">
+                <button class="login-button menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+                <div class="welcome-info">
+                    <span>Welcome, <strong><span id="welcome-user-header">Admin</span></strong></span>
+                    <a href="#" class="logout-btn" onclick="handleLogout(); return false;">Logout</a>
+                </div>
+            </div>
+
+            <div class="main-content-area">
+                
+                <div id="add-book" class="dashboard-view">
+                    <h1 class="page-title">Add New Book</h1>
+                    <div class="card">
+                        <form id="addBookForm" class="book-form">
+                            <div class="form-group">
+                                <label for="bookName">Book Name:</label>
+                                <input type="text" id="bookName" name="bookName" placeholder="e.g., The Great Gatsby" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="authorName">Author Name:</label>
+                                <input type="text" id="authorName" name="authorName" placeholder="e.g., F. Scott Fitzgerald" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="categoryName">Category:</label>
+                                <input type="text" id="categoryName" name="categoryName" placeholder="e.g., Fiction, Novel" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bookNumber">Book Number/ISBN:</label>
+                                <input type="text" id="bookNumber" name="bookNumber" placeholder="e.g., ISBN-123456" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bookPrice">Book Price ($):</label>
+                                <input type="number" step="0.01" id="bookPrice" name="bookPrice" value="19.99" required>
+                            </div>
+                            
+                            <div class="form-group" style="grid-column: span 1;">
+                                <label for="maxIssueDays">Max Issue Days:</label>
+                                <input type="number" id="maxIssueDays" name="maxIssueDays" value="7" min="1" required>
+                            </div>
+
+                            <button type="submit" class="add-book-btn">Add Book to Library</button>
+                        </form>
+                        <p id="book-add-message"></p>
+                    </div>
+                </div>
+
+                <div id="search-book" class="dashboard-view hidden">
+                    <h1 class="page-title">Book Search & Issue</h1>
+                    <div class="card">
+                        <h2>Search Catalogue</h2>
+                        <div class="search-input-group">
+                            <input id="dashboardSearch" placeholder="Search by book name, author, or ISBN..." />
+                            <button onclick="renderBookListDashboard()">Search</button>
+                        </div>
+
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Book No.</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardBooksList">
+                                <tr><td colspan="5" style="text-align:center;">Use the search box to find a book.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="issued-book" class="dashboard-view hidden">
+                    <h1 class="page-title">Currently Issued Books</h1>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Book Name</th>
+                                    <th>Issued To</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Days Left</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardIssuedList">
+                                <tr><td colspan="6" style="text-align:center;">No books are currently issued.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="fine-details" class="dashboard-view hidden">
+                    <h1 class="page-title">Pending Fine Details</h1>
+                    <div class="card">
+                        <p style="margin-bottom: 20px;">Fines are calculated at $1 per day after a **1-day grace period** past the due date.</p>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Book Name</th>
+                                    <th>Due Date</th>
+                                    <th>Days Overdue</th>
+                                    <th>Total Fine</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardFineList">
+                                <tr><td colspan="6" style="text-align:center;">No pending fines.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="history" class="dashboard-view hidden">
+                    <h1 class="page-title">Issue History (Returned Books)</h1>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Book Name</th>
+                                    <th>Issued To</th>
+                                    <th>Issue Date</th>
+                                    <th>Return Date</th>
+                                    <th>Fine Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardHistoryList">
+                                <tr><td colspan="5" style="text-align:center;">No books have been returned yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===== Local Storage Keys & Defaults ===== */
+    const VALID_EMAIL = 'admin@lms.com';
+    const VALID_PASSWORD = 'password123';
+    const AUTH_KEY = 'lms_isLoggedIn';
+    const USER_KEY = 'lms_userEmail';
+    const NAME_KEY = 'lms_userName';
+    const SIGNUP_USER_KEY_PREFIX = 'lms_new_user_';
+    const BOOKS_KEY = 'lms_books';
+    const ISSUED_KEY = 'lms_issued';
+    const HISTORY_KEY = 'lms_issue_history'; // NEW: To store returned books
+    const FINE_PER_DAY = 1.0;
+    const GRACE_DAYS = 1;
+    const MAX_ISSUE_DAYS_DEFAULT = 7;
+
+    /* ===== Utilities ===== */
+    function qs(id){ return document.getElementById(id) }
+    function getBooks(){ return JSON.parse(localStorage.getItem(BOOKS_KEY) || '[]') }
+    function saveBooks(list){ localStorage.setItem(BOOKS_KEY, JSON.stringify(list)) }
+    function getIssued(){ return JSON.parse(localStorage.getItem(ISSUED_KEY) || '[]') }
+    function saveIssued(list){ localStorage.setItem(ISSUED_KEY, JSON.stringify(list)) }
+    function getHistory(){ return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]') } // NEW
+    function saveHistory(list){ localStorage.setItem(HISTORY_KEY, JSON.stringify(list)) } // NEW
+
+    function formatDate(dateStr) {
+        if (!dateStr) return 'N/A';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+    
+    // Calculate Fine (New Logic)
+    function calculateFine(issueDate, maxIssueDays, returnDate = null) {
+        const checkDate = returnDate ? new Date(returnDate) : new Date();
+        const issue = new Date(issueDate);
+        
+        // Calculate the actual due date
+        const dueDate = new Date(issue);
+        dueDate.setDate(issue.getDate() + (maxIssueDays || MAX_ISSUE_DAYS_DEFAULT));
+
+        // Calculate the grace date (due date + grace days)
+        const graceDate = new Date(dueDate);
+        graceDate.setDate(dueDate.getDate() + GRACE_DAYS);
+        
+        // Check if the check date is past the grace period
+        if (checkDate <= graceDate) {
+            return {
+                dueDate: dueDate.toISOString(),
+                daysOverdue: 0,
+                fineAmount: 0.0,
+                status: 'None' // No fine
+            };
+        }
+
+        // Calculate days overdue starting from the day *after* the grace period ends
+        const diffTime = checkDate - graceDate;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const daysOverdue = Math.max(0, diffDays); // Should always be >= 1 here
+        
+        const fineAmount = daysOverdue * FINE_PER_DAY;
+
+        return {
+            dueDate: dueDate.toISOString(),
+            daysOverdue: daysOverdue,
+            fineAmount: fineAmount,
+            status: 'Overdue' // Fine is pending
+        };
+    }
+    
+    // Calculate Days Left/Overdue
+    function getDaysLeft(issueDate, maxIssueDays) {
+        const today = new Date();
+        const issue = new Date(issueDate);
+        const dueDate = new Date(issue);
+        dueDate.setDate(issue.getDate() + (maxIssueDays || MAX_ISSUE_DAYS_DEFAULT));
+
+        const diffTime = dueDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Round up to show "1 day left" even if 1 hour remains
+        
+        if (diffDays >= 0) {
+            return `${diffDays} day${diffDays === 1 ? '' : 's'} left`;
+        } else {
+            const overdueDays = Math.abs(diffDays);
+            return `${overdueDays} day${overdueDays === 1 ? '' : 's'} overdue`;
+        }
+    }
+
+
+    /* ===== Page & View Switcher ===== */
+    function showPage(pageId){
+        ['login-page','signup-page','dashboard-page'].forEach(id => {
+            const el = qs(id);
+            if(!el) return;
+            el.classList.toggle('hidden', id !== pageId);
+        });
+
+        if(pageId === 'dashboard-page'){
+            // Get user info and set headers
+            const email = localStorage.getItem(USER_KEY) || VALID_EMAIL;
+            const name = localStorage.getItem(NAME_KEY) || 'Admin';
+
+            qs('welcome-user').textContent = name;
+            qs('welcome-user-header').textContent = name;
+            qs('welcome-email').textContent = email;
+            
+            // Set initial dashboard view
+            showDashboardView('add-book');
+        }
+        
+        // Close sidebar on page change for mobile
+        if(window.innerWidth < 940) qs('dashboardSidebar').classList.remove('open');
+    }
+
+    function showDashboardView(viewId) {
+        document.querySelectorAll('.dashboard-view').forEach(el => {
+            el.classList.add('hidden');
+        });
+        qs(viewId).classList.remove('hidden');
+
+        document.querySelectorAll('.sidebar-menu a').forEach(el => {
+            el.classList.remove('active-menu');
+            if (el.getAttribute('data-page-view') === viewId) {
+                el.classList.add('active-menu');
+            }
+        });
+
+        // Close sidebar after selecting a view on mobile
+        if(window.innerWidth < 940) qs('dashboardSidebar').classList.remove('open');
+    }
+
+    function toggleSidebar() {
+        qs('dashboardSidebar').classList.toggle('open');
+    }
+
+    function checkAuthAndLoad(){
+        if(localStorage.getItem(AUTH_KEY) === 'true') showPage('dashboard-page');
+        else showPage('login-page');
+    }
+
+    /* ===== LOGIN ===== */
+    function handleLogin(event){
+        event.preventDefault();
+        const email = qs('email').value.trim();
+        const pass = qs('password').value.trim();
+        const err = qs('login-error');
+
+        let loggedIn = false;
+        let userName = 'Admin';
+        
+        // 1. Check admin
+        if(email === VALID_EMAIL && pass === VALID_PASSWORD){
+            loggedIn = true;
+        }
+
+        // 2. Check registered user
+        if(!loggedIn) {
+            const saved = localStorage.getItem(SIGNUP_USER_KEY_PREFIX + email);
+            if(saved){
+                try{
+                    const obj = JSON.parse(saved);
+                    if(obj.password === pass){
+                        loggedIn = true;
+                        userName = obj.name;
+                    }
+                }catch(e){}
+            }
+        }
+
+        if(loggedIn) {
+            localStorage.setItem(AUTH_KEY, 'true');
+            localStorage.setItem(USER_KEY, email);
+            localStorage.setItem(NAME_KEY, userName);
+            err.style.display = 'none';
+            showPage('dashboard-page');
+        } else {
+            err.textContent = 'Invalid Email or Password.';
+            err.style.display = 'block';
+            qs('password').value = '';
+        }
+    }
+
+    /* ===== SIGNUP ===== */
+    function handleSignup(event){
+        event.preventDefault();
+        const name = qs('regName').value.trim();
+        const email = qs('regEmail').value.trim();
+        const pass = qs('regPassword').value;
+        const confirm = qs('regConfirmPassword').value;
+        const msg = qs('signup-message');
+        msg.style.display = 'none'; msg.style.color = 'red'; msg.classList.remove('error-message'); msg.style.background = '#ffe3e6';
+
+        if(pass !== confirm){ msg.textContent = 'Passwords do not match'; msg.style.display='block'; return; }
+        if(pass.length < 5){ msg.textContent = 'Password must be at least 5 characters'; msg.style.display='block'; return; }
+        
+        if(localStorage.getItem(SIGNUP_USER_KEY_PREFIX + email)) {
+            msg.textContent = 'User with this email already exists.'; msg.style.display='block'; return;
+        }
+
+        const key = SIGNUP_USER_KEY_PREFIX + email;
+        const userObj = { name:name, email:email, password: pass, isAdmin: false };
+        localStorage.setItem(key, JSON.stringify(userObj));
+
+        msg.style.color = 'var(--success)';
+        msg.style.background = '#e6ffec';
+        msg.textContent = 'Registration successful! You can now log in.';
+        msg.style.display = 'block';
+        event.target.reset();
+
+        setTimeout(()=>{ showPage('login-page'); qs('email').value = email; msg.style.display = 'none'; }, 2000);
+    }
+
+    /* ===== LOGOUT ===== */
+    function handleLogout(){
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem(USER_KEY);
+        localStorage.removeItem(NAME_KEY);
+        showPage('login-page');
+    }
+
+    /* ===== ADD BOOK (Admin View) ===== */
+    function handleAddBook(e){
+        e.preventDefault();
+        const name = qs('bookName').value.trim();
+        const author = qs('authorName').value.trim();
+        const cat = qs('categoryName').value.trim();
+        const number = qs('bookNumber').value.trim();
+        const price = parseFloat(qs('bookPrice').value);
+        const maxDays = parseInt(qs('maxIssueDays').value);
+        const msg = qs('book-add-message');
+
+        if(!name || !author || !number){ msg.textContent='All fields must be filled'; msg.style.color='crimson'; return; }
+
+        const books = getBooks();
+        const id = Date.now().toString(); // Simple unique ID
+        books.unshift({ id, name, author, category:cat, number, price, maxIssueDays: maxDays, createdAt: new Date().toISOString() });
+        saveBooks(books);
+
+        msg.textContent = `Book "${name}" added successfully.`;
+        msg.style.color = 'var(--success)';
+        e.target.reset();
+
+        setTimeout(()=>{ msg.textContent = ''; }, 4000);
+    }
+    
+    /* ===== RENDER BOOK LIST (Search View) ===== */
+    function renderBookListDashboard(){
+        const listEl = qs('dashboardBooksList');
+        const q = qs('dashboardSearch').value.trim().toLowerCase();
+        const books = getBooks();
+        listEl.innerHTML = '';
+        
+        const filtered = books.filter(b => {
+            if(!q) return true;
+            return (b.name || '').toLowerCase().includes(q) ||
+                   (b.author || '').toLowerCase().includes(q) ||
+                   (b.number || '').toLowerCase().includes(q);
+        });
+
+        if(filtered.length === 0){
+            listEl.innerHTML = '<tr><td colspan="5" style="text-align:center;"><p style="color:var(--muted); margin:10px 0;">No books found matching your criteria.</p></td></tr>';
+            return;
+        }
+
+        filtered.forEach(b => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${escapeHtml(b.name)}</strong></td>
+                <td>${escapeHtml(b.author)}</td>
+                <td>${escapeHtml(b.category)}</td>
+                <td>${escapeHtml(b.number)}</td>
+                <td>
+                    <button class="action-btn" onclick="issueBook('${b.id}')">Issue Book</button>
+                </td>
+            `;
+            listEl.appendChild(row);
+        });
+    }
+
+    /* ===== ISSUE BOOK (Functionality) ===== */
+    function issueBook(bookId){
+        const userEmail = localStorage.getItem(USER_KEY) || VALID_EMAIL;
+        const userName = localStorage.getItem(NAME_KEY) || 'Admin';
+        
+        const books = getBooks();
+        const book = books.find(x => x.id === bookId);
+        if(!book) { alert('Error: Book not found'); return; }
+
+        const issued = getIssued();
+        
+        // Prevent re-issuing the same book to the same person (simple check)
+        const alreadyIssued = issued.find(i => i.bookId === bookId && i.issuedTo === userEmail);
+        if(alreadyIssued) {
+             alert(`Book "${book.name}" is already issued to you!`);
+             return;
+        }
+
+        // Add issue entry. NOTE: issuedAt is the date the book was "picked up".
+        issued.unshift({
+            id: Date.now().toString(),
+            bookId: book.id,
+            bookName: book.name,
+            maxIssueDays: book.maxIssueDays || MAX_ISSUE_DAYS_DEFAULT,
+            issuedTo: userEmail,
+            issuedByName: userName,
+            issuedAt: new Date().toISOString() // This stores the date the book was issued/picked up
+        });
+        saveIssued(issued);
+        
+        alert(`Book "${book.name}" issued to ${userName} (email: ${userEmail})`);
+        
+        // Switch to the issued books view to show the result
+        showDashboardView('issued-book');
+        renderIssuedListDashboard();
+    }
+    
+    /* ===== RENDER ISSUED LIST (Currently Issued View) ===== */
+    function renderIssuedListDashboard(){
+        const listEl = qs('dashboardIssuedList');
+        const userEmail = localStorage.getItem(USER_KEY) || VALID_EMAIL;
+        const issued = getIssued();
+        listEl.innerHTML = '';
+
+        // Filter by current user/admin (Admin sees all, Users see only their books)
+        const isPublicUser = userEmail !== VALID_EMAIL;
+        const filteredIssued = isPublicUser 
+            ? issued.filter(i => i.issuedTo === userEmail) 
+            : issued;
+            
+        if(filteredIssued.length === 0){
+            listEl.innerHTML = '<tr><td colspan="6" style="text-align:center;"><p style="color:var(--muted); margin:10px 0;">No books issued for this account.</p></td></tr>';
+            return;
+        }
+
+        filteredIssued.forEach(i => {
+            const fineDetails = calculateFine(i.issuedAt, i.maxIssueDays);
+            const daysLeftText = getDaysLeft(i.issuedAt, i.maxIssueDays);
+            const isOverdue = fineDetails.daysOverdue > 0;
+            
+            const daysLeftClass = isOverdue 
+                ? 'style="font-weight:700; color:var(--danger);"' 
+                : 'style="font-weight:600; color:var(--success);"';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${escapeHtml(i.bookName)}</strong></td>
+                <td>${escapeHtml(i.issuedTo)}</td>
+                <td>${formatDate(i.issuedAt)}</td>
+                <td>${formatDate(fineDetails.dueDate)}</td>
+                <td ${daysLeftClass}>${daysLeftText}</td>
+                <td>
+                    <button class="action-btn action-btn-return" onclick="returnBook('${i.id}')">Return</button>
+                </td>
+            `;
+            listEl.appendChild(row);
+        });
+    }
+
+    /* ===== RENDER FINE DETAILS (Fine Details View) ===== */
+    function renderFineDetails() {
+        const listEl = qs('dashboardFineList');
+        const userEmail = localStorage.getItem(USER_KEY) || VALID_EMAIL;
+        const issued = getIssued();
+        listEl.innerHTML = '';
+        
+        // Filter by current user and check for fines
+        const isPublicUser = userEmail !== VALID_EMAIL;
+        const filteredIssued = isPublicUser 
+            ? issued.filter(i => i.issuedTo === userEmail) 
+            : issued;
+            
+        const finedBooks = filteredIssued.map(i => {
+            const fine = calculateFine(i.issuedAt, i.maxIssueDays);
+            return { ...i, ...fine };
+        }).filter(item => item.fineAmount > 0);
+
+        if(finedBooks.length === 0){
+            listEl.innerHTML = '<tr><td colspan="6" style="text-align:center;"><p style="color:var(--muted); margin:10px 0;">No pending fines at the moment. Keep it up!</p></td></tr>';
+            return;
+        }
+
+        finedBooks.forEach(i => {
+            const statusLabel = `<span class="fine-label ${i.status.toLowerCase()}" style="color:white; background:var(--danger)">${i.status}</span>`;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${escapeHtml(i.bookName)}</strong></td>
+                <td>${formatDate(i.dueDate)}</td>
+                <td style="color:var(--danger); font-weight:700;">${i.daysOverdue} days</td>
+                <td style="color:var(--danger); font-weight:700;">$${i.fineAmount.toFixed(2)}</td>
+                <td>${statusLabel}</td>
+                <td>
+                    <button class="action-btn action-btn-pay" onclick="payFine('${i.id}', ${i.fineAmount.toFixed(2)})">Pay Fine</button>
+                </td>
+            `;
+            listEl.appendChild(row);
+        });
+    }
+    
+    // Pay Fine - simple demo
+    function payFine(issueId, amount) {
+        alert(`Fine of $${amount} for book ID ${issueId} has been marked as paid. (Demo)`);
+        // In a real app, this would update a 'finePaid' status in the issue record.
+        // For this simple demo, we will proceed with the return, marking the fine as paid.
+        returnBook(issueId, true); 
+    }
+
+
+    /* ===== RETURN BOOK (Functionality) - MODIFIED to store return date and move to history ===== */
+    function returnBook(issueId, finePaid = false){
+        const issued = getIssued();
+        const bookIndex = issued.findIndex(x => x.id === issueId);
+        
+        if(bookIndex === -1) return; 
+
+        const bookToReturn = issued[bookIndex];
+        const returnDate = new Date().toISOString(); // The date the book is submitted/returned
+        let fineAmount = 0.0;
+        
+        // Check for outstanding fine
+        const fineDetails = calculateFine(bookToReturn.issuedAt, bookToReturn.maxIssueDays, returnDate);
+        fineAmount = fineDetails.fineAmount;
+
+        if(fineAmount > 0 && !finePaid) {
+             if(!confirm(`Warning: This book is overdue! Pending fine is $${fineAmount.toFixed(2)}. Click OK to pay now and return, or Cancel to keep the fine pending.`)) {
+                return; // Stop return if user cancels
+             }
+             finePaid = true; // Assume user chose OK to pay
+        }
+
+        // 1. Create history record
+        const history = getHistory();
+        history.unshift({
+            ...bookToReturn,
+            returnedAt: returnDate, // Stores the date the book was submitted/returned
+            fineAmount: fineAmount,
+            finePaid: finePaid
+        });
+        saveHistory(history);
+
+        // 2. Remove from active issued list
+        issued.splice(bookIndex, 1);
+        saveIssued(issued);
+        
+        alert(`Book "${bookToReturn.bookName}" successfully returned. Fine: $${fineAmount.toFixed(2)} (${finePaid ? 'Paid' : 'Unpaid in Demo'}).`);
+        
+        // Refresh relevant views
+        renderIssuedListDashboard();
+        renderFineDetails();
+        renderIssuedHistory(); // Refresh history tab
+    }
+    
+    /* ===== NEW: RENDER ISSUED HISTORY (History View) ===== */
+    function renderIssuedHistory() {
+        const listEl = qs('dashboardHistoryList');
+        const userEmail = localStorage.getItem(USER_KEY) || VALID_EMAIL;
+        const history = getHistory();
+        listEl.innerHTML = '';
+        
+        // Filter history by current user/admin
+        const isPublicUser = userEmail !== VALID_EMAIL;
+        const filteredHistory = isPublicUser 
+            ? history.filter(i => i.issuedTo === userEmail) 
+            : history;
+
+        if(filteredHistory.length === 0){
+            listEl.innerHTML = '<tr><td colspan="5" style="text-align:center;"><p style="color:var(--muted); margin:10px 0;">No books have been returned yet.</p></td></tr>';
+            return;
+        }
+
+        filteredHistory.forEach(i => {
+            const fineStatus = i.fineAmount > 0 
+                ? `<span style="color: ${i.finePaid ? 'var(--success)' : 'var(--danger)'}; font-weight: 700;">$${i.fineAmount.toFixed(2)} (${i.finePaid ? 'Paid' : 'Unpaid'})</span>`
+                : '<span style="color: var(--success);">None</span>';
+                
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${escapeHtml(i.bookName)}</strong></td>
+                <td>${escapeHtml(i.issuedTo)}</td>
+                <td>${formatDate(i.issuedAt)}</td> <td>${formatDate(i.returnedAt)}</td> <td>${fineStatus}</td>
+            `;
+            listEl.appendChild(row);
+        });
+    }
+
+    /* ===== Escape html for safety when injecting text (Prevent XSS) ===== */
+    function escapeHtml(str){
+      if(!str) return '';
+      return String(str).replace(/[&<>"'`=\/]/g, function(s){ return ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'
+      })[s]});
+    }
+
+    /* ===== Attach listeners after DOM ready ===== */
+    document.addEventListener('DOMContentLoaded', function(){
+      // Set initial books if storage is empty (for demo)
+      if (getBooks().length === 0) {
+          saveBooks([
+              { id:'1001', name: 'JavaScript: The Good Parts', author: 'Douglas Crockford', category: 'Programming', number: 'JS-001', price: 39.99, maxIssueDays: 10, createdAt: new Date().toISOString() },
+              { id:'1002', name: 'The Lord of the Rings', author: 'J.R.R. Tolkien', category: 'Fantasy', number: 'LOTR-005', price: 25.00, maxIssueDays: 14, createdAt: new Date().toISOString() },
+              { id:'1003', name: 'Pride and Prejudice', author: 'Jane Austen', category: 'Classic', number: 'P&P-002', price: 12.50, maxIssueDays: 7, createdAt: new Date(new Date().setDate(new Date().getDate() - 10)).toISOString() },
+          ]);
+      }
+      
+      // forms
+      qs('loginForm').addEventListener('submit', handleLogin);
+      qs('signupForm').addEventListener('submit', handleSignup);
+      qs('addBookForm').addEventListener('submit', handleAddBook);
+      qs('dashboardSearch').addEventListener('input', function(){ renderBookListDashboard(); });
+
+      // initial load
+      checkAuthAndLoad();
+    });
+  </script>
+
+</body>
+</html>

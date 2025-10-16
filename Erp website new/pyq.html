@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYQ Portal | MAKAUT ERP</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+    .sidebar-nav .nav-link { color: #333; padding: 12px 15px; border-radius: 8px; margin-bottom: 5px; display: flex; align-items: center; transition: 0.2s; }
+    .sidebar-nav .nav-link.active { background:#007bff; color:#fff !important; font-weight:600; border-left:5px solid #ffc107; box-shadow:0 4px 8px rgba(0,123,255,0.2); }
+    .sidebar-nav .nav-link:hover:not(.active){ background:#e9ecef; transform:translateX(2px);}
+    .sidebar-header { padding:15px; background:#007bff; color:#fff; font-weight:bold; }
+    .card { border-radius:12px; border:none; box-shadow:0 4px 20px rgba(0,0,0,0.05); }
+    .sidebar-separator { height:2px; background:#007bff; opacity:0.2; margin:15px 10px; border-radius:1px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="bg-primary text-white p-3 shadow-sm">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <span class="fw-bold">MAKAUT ERP - PYQ Portal</span>
+      <a href="index.html" class="btn btn-warning btn-sm fw-bold rounded-pill">Back to Exam Portal</a>
+    </div>
+  </header>
+
+  <!-- Layout -->
+  <div class="d-flex" style="min-height: calc(100vh - 55px);">
+
+    <!-- Sidebar -->
+    <aside class="border-end" style="width: 260px; background:#f8f9fa;">
+      <div class="sidebar-header">PYQ MENU</div>
+      <nav class="nav flex-column sidebar-nav p-3">
+        <a class="nav-link active" data-bs-toggle="tab" href="#pyq-view">
+          <i class="fas fa-book-reader me-2"></i> View Questions
+        </a>
+        <a class="nav-link" data-bs-toggle="tab" href="#pyq-upload">
+          <i class="fas fa-cloud-upload-alt me-2"></i> Upload Questions
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="flex-grow-1 p-4 bg-light tab-content">
+
+      <!-- View Section -->
+      <div class="tab-pane fade show active" id="pyq-view">
+        <h4 class="border-bottom pb-3 mb-4 fw-bold text-success"><i class="fas fa-search me-2"></i> Previous Year Question Papers</h4>
+        <div class="card p-4 shadow-sm mb-4">
+          <form id="pyq-filter-form">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label fw-bold small text-danger">*Program:</label>
+                <select id="pyqProgram" class="form-select rounded-pill">
+                  <option value="">Please Select</option>
+                  <option value="BTECH">B.Tech</option>
+                  <option value="MTECH">M.Tech</option>
+                  <option value="BCA">BCA</option>
+                </select>
+              </div>
+              <div class="col-md-4" id="pyqDepartmentContainer" style="display:none;">
+                <label class="form-label fw-bold small text-danger">*Department:</label>
+                <select id="pyqDepartment" class="form-select rounded-pill">
+                  <option>Please Select</option>
+                  <option>Department of CSE</option>
+                  <option>Department of IT</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold small text-danger">*Semester:</label>
+                <select id="pyqSemester" class="form-select rounded-pill">
+                  <option>1st Semester</option>
+                  <option>2nd Semester</option>
+                  <option>3rd Semester</option>
+                  <option>4th Semester</option>
+                  <option>5th Semester</option>
+                  <option>6th Semester</option>
+                    <option>7th Semester</option>
+                    <option>8th Semester</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <button type="button" id="searchPyqBtn" class="btn btn-success rounded-pill px-5"><i class="fas fa-search me-2"></i>Search</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="pyqResults" style="display:none;">
+          <h5 class="mb-3 fw-bold text-success">Results:</h5>
+          <table class="table table-bordered table-striped small">
+            <thead class="bg-primary text-white">
+              <tr><th>#</th><th>Subject</th><th>Code</th><th>Year</th><th>Download</th></tr>
+            </thead>
+            <tbody id="pyqTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="pyqNoResults" class="alert alert-warning mt-3" style="display:none;">No question papers found.</div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="tab-pane fade" id="pyq-upload">
+        <h4 class="border-bottom pb-3 mb-4 fw-bold text-info"><i class="fas fa-cloud-upload-alt me-2"></i> Upload Questions</h4>
+        <div class="card p-4 shadow-sm">
+          <form id="pyq-upload-form">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label fw-bold small text-danger">*Program:</label>
+                <select id="uploadProgram" class="form-select rounded-pill" required>
+                  <option value="">Please Select</option>
+                  <option value="BTECH">B.Tech</option>
+                  <option value="MTECH">M.Tech</option>
+                  <option value="BCA">BCA</option>
+                </select>
+              </div>
+              <div class="col-md-4" id="uploadDepartmentContainer" style="display:none;">
+                <label class="form-label fw-bold small text-danger">*Department:</label>
+                <select id="uploadDepartment" class="form-select rounded-pill">
+                  <option>Please Select</option>
+                  <option>Department of CSE</option>
+                  <option>Department of IT</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold small text-danger">*Semester:</label>
+                <select id="uploadSemester" class="form-select rounded-pill" required>
+                  <option>Please Select</option>
+                  <option>1st Semester</option>
+                  <option>2nd Semester</option>
+                  <option>3rd Semester</option>
+                  <option>4th Semester</option>
+                  <option>5th Semester</option>
+                  <option>6th Semester</option>
+                    <option>7th Semester</option>
+                    <option>8th Semester</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="uploadSubjectName" class="form-control rounded-pill" placeholder="Subject Name" required>
+              </div>
+              <div class="col-md-3">
+                <input type="text" id="uploadSubjectCode" class="form-control rounded-pill" placeholder="Code" required>
+              </div>
+              <div class="col-md-3">
+                <input type="number" id="uploadExamYear" class="form-control rounded-pill" placeholder="Year" min="2000" max="2050" required>
+              </div>
+              <div class="col-12">
+                <input type="file" id="questionPaperFile" class="form-control rounded-pill" accept=".pdf" required>
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <button type="submit" class="btn btn-info text-white rounded-pill px-5"><i class="fas fa-upload me-2"></i>Submit</button>
+            </div>
+          </form>
+          <div id="uploadMessage" class="mt-3" style="display:none;"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="text-center py-2 small text-muted border-top bg-white">
+    © 2025 MAKAUT ERP | PYQ Portal
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pyqProgram = document.getElementById('pyqProgram');
+      const pyqDeptContainer = document.getElementById('pyqDepartmentContainer');
+      const searchBtn = document.getElementById('searchPyqBtn');
+      const pyqResults = document.getElementById('pyqResults');
+      const pyqTableBody = document.getElementById('pyqTableBody');
+      const pyqNoResults = document.getElementById('pyqNoResults');
+
+      pyqProgram.addEventListener('change', () => {
+        pyqDeptContainer.style.display = (pyqProgram.value === 'BTECH' || pyqProgram.value === 'MTECH') ? 'block' : 'none';
+      });
+
+      searchBtn.addEventListener('click', () => {
+        pyqTableBody.innerHTML = '';
+        pyqResults.style.display = 'none';
+        pyqNoResults.style.display = 'none';
+
+        const program = pyqProgram.value;
+        const semester = document.getElementById('pyqSemester').value;
+
+        if(program==='BTECH' && semester==='1st Semester'){
+          pyqResults.style.display = 'block';
+          const dummy = [
+            {sub:'Maths I', code:'MA101', year:'2023', file:'MA101.pdf'},
+            {sub:'C Programming', code:'CS101', year:'2024', file:'CS101.pdf'}
+          ];
+          dummy.forEach((q,i)=>{
+            pyqTableBody.innerHTML += `<tr>
+              <td>${i+1}</td><td>${q.sub}</td><td>${q.code}</td><td>${q.year}</td>
+              <td><a href="files/${q.file}" target="_blank" class="btn btn-sm btn-success rounded-pill">Download</a></td>
+            </tr>`;
+          });
+        } else {
+          pyqNoResults.style.display = 'block';
+        }
+      });
+
+      // Upload logic
+      const uploadProgram = document.getElementById('uploadProgram');
+      const uploadDeptContainer = document.getElementById('uploadDepartmentContainer');
+      const uploadForm = document.getElementById('pyq-upload-form');
+      const uploadMsg = document.getElementById('uploadMessage');
+
+      uploadProgram.addEventListener('change',()=>{
+        uploadDeptContainer.style.display = (uploadProgram.value==='BTECH' || uploadProgram.value==='MTECH') ? 'block':'none';
+      });
+
+      uploadForm.addEventListener('submit',e=>{
+        e.preventDefault();
+        const file = document.getElementById('questionPaperFile').files[0];
+        if(!file || file.type!=='application/pdf'){
+          uploadMsg.innerHTML = `<div class="alert alert-danger">Only PDF allowed.</div>`;
+        } else {
+          uploadMsg.innerHTML = `<div class="alert alert-success">Upload Successful!</div>`;
+          uploadForm.reset();
+          uploadDeptContainer.style.display='none';
+        }
+        uploadMsg.style.display='block';
+      });
+    });
+  </script>
+</body>
+</html>

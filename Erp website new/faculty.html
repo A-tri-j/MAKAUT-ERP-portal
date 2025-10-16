@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAKAUT Faculty Directory - Enhanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --makaut-dark: #5d022b;
+            --makaut-gold: #ffcc00;
+            --makaut-light: #f4f7f6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--makaut-light);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: var(--makaut-dark);
+            color: white;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Search and Filter */
+        .search-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        #facultySearch {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        #facultySearch:focus {
+            border-color: var(--makaut-gold);
+            outline: none;
+        }
+
+        /* Department Section */
+        .department-section {
+            background-color: #ffffff;
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+        .department-section h2 {
+            color: var(--makaut-dark);
+            border-bottom: 4px solid var(--makaut-gold);
+            padding-bottom: 15px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        .faculty-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding-top: 10px;
+        }
+        .faculty-card {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-left: 5px solid var(--makaut-dark);
+            border-radius: 6px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .faculty-card.hidden {
+            display: none;
+        }
+        .faculty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+        .faculty-card h3 {
+            color: #1a73e8;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        .faculty-card p {
+            margin: 7px 0;
+            font-size: 0.9em;
+        }
+        .label {
+            font-weight: 600;
+            color: var(--makaut-dark);
+            display: inline-block;
+            width: 100px; /* Aligns the data */
+        }
+        .info-detail {
+            margin-left: 5px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MAKAUT Faculty Member Directory</h1>
+        <p>Maulana Abul Kalam Azad University of Technology, West Bengal</p>
+    </div>
+
+    <div class="container">
+
+        <div class="search-container">
+            <input type="text" id="facultySearch" placeholder="Search by Name, Department, or Subject...">
+        </div>
+
+        <div class="department-section" data-department="Computer Science & Information Technology">
+            <h2>Computer Science & Information Technology Department</h2>
+            <div class="faculty-list" id="cse-it-list">
+                <div class="faculty-card" data-name="Dr. Suparna Biswas (Saha)" data-subjects="Data Structures Information Security Compiler Design Network Security" data-dept="Computer Science & Information Technology">
+                    <h3>Dr. Suparna Biswas (Saha)</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Assoc. Professor & HOD</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (CSE), M.Tech (IIT)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Data Structures, Information Security</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Network Security, Data Mining</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">suparna.b@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. Debashis De" data-subjects="Database Management Networking Algorithms AI" data-dept="Computer Science & Information Technology">
+                    <h3>Dr. Debashis De</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Professor</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Computer Science)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">DBMS, Computer Networks, AI</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Machine Learning, Wireless Sensor Networks</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">debashis.d@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. Amiya Karmakar" data-subjects="Software Engineering Operating Systems" data-dept="Computer Science & Information Technology">
+                    <h3>Dr. Amiya Karmakar</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Assistant Professor</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D., M.Tech (IT)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Software Engineering, Operating Systems</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Cloud Computing, Distributed Systems</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">amiya.k@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-section" data-department="VLSI Section">
+            <h2>VLSI Section (Electronics/ECE)</h2>
+            <div class="faculty-list" id="vlsi-list">
+                 <div class="faculty-card" data-name="Prof. Sayan Das" data-subjects="VLSI Design Nanoelectronics Digital IC Design" data-dept="VLSI Section">
+                    <h3>Prof. Sayan Das</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Professor</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (VLSI Design)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">VLSI Design, Digital IC Design</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Low-Power VLSI, IoT Hardware</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">sayan.d@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. Sumana Roy" data-subjects="Semiconductor Device Physics Microelectronics" data-dept="VLSI Section">
+                    <h3>Dr. Sumana Roy</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Associate Professor</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Electronics & Comm.)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Semiconductor Device Physics, Analog Circuits</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Device Modeling, Photonics</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">sumana.r@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-section" data-department="Biotechnology">
+            <h2>Biotechnology Department</h2>
+            <div class="faculty-list" id="biotech-list">
+                <div class="faculty-card" data-name="Dr. Jaya Bandyopadhyay" data-subjects="Molecular Biology Genetic Engineering Bioinformatics Drug Design" data-dept="Biotechnology">
+                    <h3>Dr. Jaya Bandyopadhyay</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Professor & HOD</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Biotechnology)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Molecular Biology, Genetic Engineering</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Microbial Technology, Structural Biology</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">jaya.b@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. Ranjita Biswas" data-subjects="Plant Biotechnology Microbiology Immunology" data-dept="Biotechnology">
+                    <h3>Dr. Ranjita Biswas</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Associate Professor</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Life Science)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Microbiology, Immunology</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Virology, Bio-fuel research</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">ranjita.b@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-section" data-department="Food Technology">
+            <h2>Food Technology Department</h2>
+            <div class="faculty-list" id="foodtech-list">
+                <div class="faculty-card" data-name="Dr. Niladri Chakraborty" data-subjects="Food Processing Food Safety Dairy Technology Post-Harvest" data-dept="Food Technology">
+                    <h3>Dr. Niladri Chakraborty</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Associate Professor (C)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Food Technology)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Food Processing, Food Safety</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Food Rheology, Value Addition</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">niladri.c@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. Animesh Naskar" data-subjects="Nutritional Biochemistry Food Engineering" data-dept="Food Technology">
+                    <h3>Dr. Animesh Naskar</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Assistant Professor (C)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Food Science)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Nutritional Biochemistry, Food Engineering</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Functional Foods, Food Chemistry</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">animesh.n@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-section" data-department="Forensic Science & Technology">
+            <h2>Forensic Science & Technology Department</h2>
+            <div class="faculty-list" id="forensic-list">
+                <div class="faculty-card" data-name="Dr. Chandranath Bhattacharyya" data-subjects="Forensic Chemistry Criminal Law Digital Forensics Toxicology" data-dept="Forensic Science & Technology">
+                    <h3>Dr. Chandranath Bhattacharyya</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Professor & Advisor (C)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Forensic Science)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Forensic Chemistry, Criminal Law</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Toxicology, Fingerprint Analysis</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">chandranath.b@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Ashmita Paul" data-subjects="Criminalistics Forensic Dermatoglyphics" data-dept="Forensic Science & Technology">
+                    <h3>Ashmita Paul</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Assistant Professor (C)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">M.Sc. (Forensic Science)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Criminalistics, Document Examination</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Cyber Crime, Questioned Documents</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">asmita.p@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-section" data-department="BSc Programs">
+            <h2>BSc Programs Department (General Science & Information)</h2>
+            <div class="faculty-list" id="bsc-list">
+                <div class="faculty-card" data-name="Dr. Radhaballabh Bhar" data-subjects="Applied Physics Electromagnetism Quantum Mechanics" data-dept="BSc Programs">
+                    <h3>Dr. Radhaballabh Bhar</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Professor (Applied Physics)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Physics)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Applied Physics, Optics</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Material Science, Optical Fibers</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">rb.bhar@makaut.ac.in</span></p>
+                </div>
+                <div class="faculty-card" data-name="Dr. S.P. Mondal" data-subjects="Applied Mathematics Numerical Methods Statistics" data-dept="BSc Programs">
+                    <h3>Dr. S.P. Mondal</h3>
+                    <p><span class="label">Designation:</span><span class="info-detail">Assistant Professor (Mathematics)</span></p>
+                    <p><span class="label">Education:</span><span class="info-detail">Ph.D. (Mathematics)</span></p>
+                    <p><span class="label">Subjects:</span><span class="info-detail">Applied Mathematics, Statistics</span></p>
+                    <p><span class="label">Research:</span><span class="info-detail">Fluid Dynamics, Optimization</span></p>
+                    <p><span class="label">Email:</span><span class="info-detail">sp.mondal@makaut.ac.in</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('facultySearch');
+            const facultyCards = document.querySelectorAll('.faculty-card');
+            const departmentSections = document.querySelectorAll('.department-section');
+
+            searchInput.addEventListener('keyup', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // 1. Filter individual faculty cards
+                facultyCards.forEach(card => {
+                    const name = card.getAttribute('data-name').toLowerCase();
+                    const subjects = card.getAttribute('data-subjects').toLowerCase();
+                    const dept = card.getAttribute('data-dept').toLowerCase();
+                    
+                    if (name.includes(searchTerm) || subjects.includes(searchTerm) || dept.includes(searchTerm)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                // 2. Hide entire department sections if all cards inside are hidden
+                departmentSections.forEach(section => {
+                    const visibleCards = section.querySelectorAll('.faculty-card:not(.hidden)').length;
+                    if (visibleCards === 0 && searchTerm.length > 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

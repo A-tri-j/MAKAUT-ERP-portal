@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Application - Serampore College</title>
+  <link rel="stylesheet" href="application.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="c:\Users\atrij\OneDrive\Desktop\Erp website new\picture\makaut.png" alt="College Logo">
+      <div class="logo-text">
+        <h2> Maulana Abul Kalam Azad University of Technology</h2>
+        <p>FACULTY OF ARTS SCIENCE COMMERCE</p>
+      </div>
+    </div>
+    <div class="back-home">
+      <a href="chatgpterp.html">← Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Page Title -->
+  <section class="application-hero">
+    <h1>New Application Form</h1>
+    <p>Fill in your details to register for the upcoming academic session.</p>
+  </section>
+
+  <!-- Application Form -->
+  <section class="application-form">
+    <form id="registrationForm">
+      <!-- Personal Information -->
+      <h3>Personal Information</h3>
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+      <!-- Academic Information -->
+      <h3>Academic Information</h3>
+      <label for="course">Select Course:</label>
+      <select id="course" name="course" required>
+        <option value="">--Select Course--</option>
+        <option value="BA">B.A. (Honours)</option>
+        <option value="BSc">B.Sc. (Honours)</option>
+        <option value="BCom">B.Com (Honours)</option>
+      </select>
+
+      <label for="marks">Previous Academic Marks (%):</label>
+      <input type="number" id="marks" name="marks" placeholder="Enter your marks" min="0" max="100" required>
+
+      <!-- Submit Button -->
+      <button type="submit">Submit Application</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Serampore College | Frontend Demo Only</p>
+  </footer>
+
+  <script src="application.js"></script>
+</body>
+</html>

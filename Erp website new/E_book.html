@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Reading Portal: E-Books & Daily News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global Reset & Base Styles */
+        :root {
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --background: #f8f9fa;
+            --sidebar-bg: #343a40;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --link-hover: #17a2b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Layout Structure */
+        #app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar (Navigation) */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin: 0 20px 30px 20px;
+        }
+        .nav-list a {
+            display: block;
+            padding: 15px 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .nav-list a:hover {
+            background-color: #495057;
+            color: white;
+        }
+        .nav-list a.active {
+            background-color: var(--primary);
+            color: white;
+            border-left-color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        /* Book/Content Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .book-card, .newspaper-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            border-top: 5px solid var(--primary);
+        }
+        .book-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        .book-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a3c65; 
+            min-height: 45px;
+        }
+        .book-card p {
+            font-size: 14px;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        .book-card .author {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .book-card .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: var(--success);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+        .book-card .download-btn:hover {
+            background-color: #1e7e34;
+        }
+        
+        /* Newspaper Section Specific */
+        #newspaper-archive h4 {
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        .newspaper-card {
+             border-top-color: var(--danger);
+        }
+        .newspaper-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            display: block;
+            margin-top: 10px;
+        }
+        .newspaper-card a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+        .archive-list a {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: normal; /* Make the paper name clear */
+        }
+        .archive-list strong {
+             color: var(--text-color);
+             font-size: 16px;
+             margin-bottom: 5px;
+             display: block;
+        }
+        .archive-list a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Study Notes & About Us */
+        #study-notes-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        #study-notes-content li {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary);
+            font-weight: 700;
+        }
+        #study-notes-content li span {
+            font-weight: 400;
+            color: var(--primary);
+            display: block;
+            margin-top: 5px;
+        }
+        #about-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #app-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 15px 0;
+                order: -1; 
+            }
+            .logo {
+                text-align: left;
+                margin-left: 20px;
+                margin-bottom: 15px;
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            .nav-list {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-list a {
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                padding: 10px 15px;
+            }
+            .nav-list a.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--success);
+            }
+            .main-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    
+    <div class="sidebar">
+        <div class="logo">
+            Open Library
+        </div>
+        <nav class="nav-list" id="nav-links">
+            <a href="#" class="active" data-section="ebooks">📚 E-Books</a>
+            <a href="#" data-section="newspapers">📰 Daily Newspapers</a>
+            <a href="#" data-section="notes">📝 Study Notes</a>
+            <a href="#" data-section="about">ℹ️ About Us</a>
+        </nav>
+    </div>
+
+    <div class="main-content" id="content-area">
+        
+        <div id="ebooks-section" class="content-section">
+            <h1 class="page-title">E-Books Collection</h1>
+            <p style="margin-bottom: 25px;">Free to read and download for everyone. No password required!</p>
+            <div id="ebooks-list" class="card-grid">
+                </div>
+        </div>
+
+        <div id="newspapers-section" class="content-section" style="display:none;">
+            <h1 class="page-title">Daily News Portal</h1>
+            <div class="card-grid">
+                
+                <div class="newspaper-card" style="grid-column: 1 / -1;">
+                    <h3>Today's English Newspapers (Date: <span id="current-date"></span>)</h3>
+                    <p>Click the links below to view/download today's e-paper PDF files.</p>
+                    <div id="todays-news-links" style="display:flex; flex-wrap:wrap; gap:10px 20px; margin-top:15px;">
+                        </div>
+                </div>
+
+                <div class="newspaper-card" id="newspaper-archive" style="grid-column: 1 / -1;">
+                    <h4>Last 1 Month Archive (Daily 3 Newspapers)</h4>
+                    <p>Select a date to access the archived newspapers (Demo Links).</p>
+                    <div class="card-grid archive-list" id="archive-links">
+                        </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div id="notes-section" class="content-section" style="display:none;">
+            <h1 class="page-title">Quick Study Notes & Resources</h1>
+            <div id="study-notes-content">
+                <ul>
+                    <li>AIML: Core Concepts Cheat Sheet <span>(PDF Download Link)</span></li>
+                    <li>Data Structures: Top 10 Interview Questions <span>(PDF Download Link)</span></li>
+                    <li>Zoology: Phylum Classification Chart <span>(PDF Download Link)</span></li>
+                    <li>Mathematics: Calculus Formulae <span>(PDF Download Link)</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="about-section" class="content-section" style="display:none;">
+            <h1 class="page-title">About Our Free Portal</h1>
+            <p>Welcome to our community-driven, free online library. Our mission is to provide open access to educational resources and daily news for students and lifelong learners worldwide. We believe knowledge should be free.</p>
+            <p><strong>Note:</strong> All PDF links in this demo are placeholders and lead to a <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">demo PDF file</a>. In a real application, these links would point to the actual e-paper files.</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // --- DATA STRUCTURE: Books (Section Wise) ---
+    const bookData = {
+        'AIML': [
+            { id: 1, title: 'Introduction to AI', author: 'Stuart Russell', link: 'aiml_ai.pdf' },
+            { id: 2, title: 'Machine Learning Basics', author: 'Andrew Ng', link: 'aiml_ml.pdf' },
+            { id: 3, title: 'Deep Learning with Python', author: 'Francois Chollet', link: 'aiml_dl.pdf' },
+            { id: 4, title: 'Reinforcement Learning', author: 'Richard S. Sutton', link: 'aiml_rl.pdf' }
+        ],
+        'Data Structure': [
+            { id: 5, title: 'Data Structures using C', author: 'Reema Thareja', link: 'ds_c.pdf' },
+            { id: 6, title: 'DSA in Java', author: 'Robert Lafore', link: 'ds_java.pdf' },
+            { id: 7, title: 'Data Structures and Algorithms in Python', author: 'Michael T. Goodrich', link: 'ds_python.pdf' },
+            { id: 8, title: 'Algorithms Unlocked', author: 'Thomas H. Cormen', link: 'ds_algo.pdf' }
+        ],
+        'Zoology': [
+            { id: 9, title: 'Zoology: A Comprehensive Guide', author: 'Miller & Harley', link: 'zoo_guide.pdf' },
+            { id: 10, title: 'Invertebrate Zoology', author: 'P.S. Kulkarni', link: 'zoo_inver.pdf' },
+            { id: 11, title: 'Vertebrate Zoology', author: 'E.L. Jordan', link: 'zoo_ver.pdf' },
+            { id: 12, title: 'Animal Physiology', author: 'Knut Schmidt-Nielsen', link: 'zoo_physio.pdf' },
+            { id: 13, title: 'Ecology and Evolution', author: 'Robert Ricklefs', link: 'zoo_eco.pdf' }
+        ],
+        'Mathematics': [
+            { id: 14, title: 'Calculus: Early Transcendentals', author: 'James Stewart', link: 'math_calc.pdf' },
+            { id: 15, title: 'Discrete Mathematics', author: 'Kenneth Rosen', link: 'math_discrete.pdf' },
+            { id: 16, title: 'Linear Algebra', author: 'Gilbert Strang', link: 'math_linear.pdf' },
+            { id: 17, title: 'Probability & Statistics', author: 'Sheldon Ross', link: 'math_prob.pdf' },
+            { id: 18, title: 'Modern Algebra', author: 'D.S. Malik', link: 'math_algebra.pdf' }
+        ]
+    };
+
+    // --- DATA STRUCTURE: Newspapers (Updated with 6 Names) ---
+    const newspaperData = [
+        { name: "The Times of India", link: "toi_epaper_demo.pdf" },
+        { name: "The Hindu", link: "thehindu_epaper_demo.pdf" },
+        { name: "Hindustan Times", link: "ht_epaper_demo.pdf" }, 
+        { name: "The Economic Times", link: "et_epaper_demo.pdf" },
+        { name: "The Telegraph", link: "telegraph_epaper_demo.pdf" }, 
+        { name: "Indian Express", link: "indianexp_epaper_demo.pdf" }
+    ];
+
+    // Placeholder URL for all PDF downloads (in a real app, this would be the actual file path)
+    const DUMMY_PDF_URL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+
+    // --- RENDERING FUNCTIONS ---
+
+    // 1. Render E-Books
+    function renderEbooks() {
+        const listEl = document.getElementById('ebooks-list');
+        listEl.innerHTML = '';
+        
+        for (const category in bookData) {
+            // Add a header for the category
+            listEl.innerHTML += `<h2 style="grid-column: 1 / -1; margin-top: 20px; color: var(--text-color); font-size: 24px;">${category} (${bookData[category].length} Books)</h2>`;
+            
+            bookData[category].forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <h3>${book.title}</h3>
+                    <p>Author: <span class="author">${book.author}</span></p>
+                    <p>Category: ${category}</p>
+                    <a href="${DUMMY_PDF_URL}" target="_blank" class="download-btn">⬇️ Download PDF</a>
+                `;
+                listEl.appendChild(card);
+            });
+        }
+    }
+    
+    // 2. Render Newspapers
+    function renderNewspapers() {
+        // Set current date
+        const today = new Date();
+        document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        // Render Today's Links
+        const todayLinksEl = document.getElementById('todays-news-links');
+        todayLinksEl.innerHTML = '';
+        newspaperData.forEach(news => {
+            todayLinksEl.innerHTML += `<a href="${DUMMY_PDF_URL}" target="_blank" style="margin-right: 15px;">${news.name} (PDF)</a>`;
+        });
+        
+        // Render Archive (Last 1 Month)
+        const archiveEl = document.getElementById('archive-links');
+        archiveEl.innerHTML = '';
+
+        for (let i = 1; i <= 30; i++) {
+            const archiveDate = new Date();
+            archiveDate.setDate(today.getDate() - i);
+            const dateStr = archiveDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            // Create a column for each archive date
+            const archiveItem = document.createElement('div');
+            archiveItem.style.padding = '10px';
+            // Show the date
+            archiveItem.innerHTML = `<strong>${dateStr}</strong>`;
+            
+            // Add dummy links for that day (showing 3 links for archive simplicity)
+            newspaperData.slice(0, 3).forEach(news => { 
+                // *** UPDATED: Now shows the full newspaper name ***
+                archiveItem.innerHTML += `<a href="${DUMMY_PDF_URL}" target="_blank" title="Download ${news.name}">${news.name}</a>`;
+            });
+
+            archiveEl.appendChild(archiveItem);
+        }
+    }
+
+
+    // --- SECTION SWITCHER ---
+    function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show the requested section
+        document.getElementById(sectionId + '-section').style.display = 'block';
+
+        // Update active class in sidebar
+        document.querySelectorAll('#nav-links a').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-section') === sectionId) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Execute section-specific rendering
+        if (sectionId === 'ebooks') {
+            renderEbooks();
+        } else if (sectionId === 'newspapers') {
+            renderNewspapers();
+        }
+    }
+
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set up navigation listeners
+        document.getElementById('nav-links').addEventListener('click', (event) => {
+            if (event.target.tagName === 'A') {
+                event.preventDefault();
+                const section = event.target.getAttribute('data-section');
+                showSection(section);
+            }
+        });
+
+        // Load default section (E-Books)
+        showSection('ebooks');
+    });
+</script>
+
+</body>
+</html>

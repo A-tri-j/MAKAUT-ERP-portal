@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAKAUT Non-Teaching Staff List</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        header {
+            background-color: #004d99; /* MAKAUT Blue */
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -25px -25px 20px -25px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
+            color: #ffcc00; /* Yellow Accent */
+        }
+
+        /* Search Bar Style */
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #staffSearch {
+            width: 80%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        #staffSearch:focus {
+            border-color: #004d99;
+            outline: none;
+        }
+
+        /* Staff Table Styles */
+        .staff-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed; /* Ensures columns are respected */
+        }
+        .staff-table th, .staff-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        .staff-table th {
+            background-color: #e6f0ff;
+            color: #004d99;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .staff-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .staff-table tbody tr.hide {
+            display: none;
+        }
+
+        /* Section Heading */
+        .department-heading {
+            background-color: #f0f8ff;
+            color: #004d99;
+            padding: 10px 15px;
+            margin-top: 25px;
+            border-left: 4px solid #ffcc00;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>MAKAUT Non-Teaching and Administrative Staff List</h1>
+            <p>(Excluding Professors/Directors)</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="staffSearch" onkeyup="filterStaff()" placeholder="Search by Name or Designation...">
+        </div>
+
+        <div class="department-heading">1. Registrar's Section</div>
+        <table class="staff-table">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 35%;">Designation</th>
+                    <th style="width: 30%;">Status (Permanent/Contractual)</th>
+                </tr>
+            </thead>
+            <tbody id="staffList_Registrar">
+                <tr><td>Mr. Amar Kanti Ghosh</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Som Mauli Adhikari</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Ms. Rupa Dey</td><td>Supervisor (Day Care Centre)</td><td>Permanent</td></tr>
+                <tr><td>Mr. Sagar Ratan Basu</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Ms. Sukanya Das</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Ms. Bratati Ghosh</td><td>Jr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Swarup Majumdar</td><td>Group D</td><td>Permanent</td></tr>
+                <tr><td>Mr. Pradip Paswan</td><td>Group D</td><td>Permanent</td></tr>
+            </tbody>
+        </table>
+
+        <div class="department-heading">2. Controller of Examination's Section (COE)</div>
+        <table class="staff-table">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 35%;">Designation</th>
+                    <th style="width: 30%;">Status (Permanent/Contractual)</th>
+                </tr>
+            </thead>
+            <tbody id="staffList_COE">
+                <tr><td>Mr. Ajay Bhattacharya</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Sudhansu Chakraborty</td><td>Sr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Ms. Sujata Ghosh</td><td>Sr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Kaushik Ghosh</td><td>Sr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Khorsed Munshe</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Ranjan Mondal</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Narayn Rao</td><td>Group D</td><td>Permanent</td></tr>
+            </tbody>
+        </table>
+        
+        <div class="department-heading">3. Finance Section</div>
+        <table class="staff-table">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 35%;">Designation</th>
+                    <th style="width: 30%;">Status (Permanent/Contractual)</th>
+                </tr>
+            </thead>
+            <tbody id="staffList_Finance">
+                <tr><td>Mr. Ashis Nandi</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Ashis Sarkar</td><td>Sr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Shamik Ghosh</td><td>Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Soumendu Ghosh</td><td>Jr. Assistant</td><td>Permanent</td></tr>
+                <tr><td>Mr. Arnab Pal</td><td>Group D</td><td>Permanent</td></tr>
+            </tbody>
+        </table>
+
+        <div class="department-heading">4. Technical Staff (Various Departments)</div>
+        <table class="staff-table">
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 35%;">Designation</th>
+                    <th style="width: 30%;">Department</th>
+                </tr>
+            </thead>
+            <tbody id="staffList_Technical">
+                <tr><td>Mr. Amit Paul</td><td>Store Keeper</td><td>Computer Science / IT</td></tr>
+                <tr><td>Mr. Amlan Chakraborty</td><td>Workshop Superintendent</td><td>Computer Science / IT</td></tr>
+                <tr><td>Ms. Chumki Das</td><td>Technical Assistant</td><td>Computer Science / IT</td></tr>
+                <tr><td>Mr. Shubhashis Sengupta</td><td>Technical Assistant</td><td>Computer Science / IT</td></tr>
+                <tr><td>Mr. Pritimoy Sanyal</td><td>Technical Assistant</td><td>Computer Science / IT</td></tr>
+                <tr><td>Mr. Mithun Ghosh</td><td>Technical Assistant</td><td>Industrial Engg. & Mgmt.</td></tr>
+            </tbody>
+        </table>
+
+
+        </div>
+
+    <footer>
+        <p>This list is compiled based on information available from the MAKAUT official website. For accurate and updated information, please always refer to the official <a href="https://makautwb.ac.in/" target="_blank">MAKAUT website</a>.</p>
+    </footer>
+
+    <script>
+        // JavaScript Section for Search Functionality
+        function filterStaff() {
+            var input, filter, tableBodies, tr, i;
+            input = document.getElementById("staffSearch");
+            filter = input.value.toUpperCase();
+            
+            // Select all tbody elements within the staff-table
+            tableBodies = document.querySelectorAll('.staff-table tbody');
+
+            tableBodies.forEach(tbody => {
+                tr = tbody.getElementsByTagName("tr");
+                
+                // Loop through all table rows
+                for (i = 0; i < tr.length; i++) {
+                    // Check the first and second columns (Name and Designation)
+                    var nameCell = tr[i].getElementsByTagName("td")[0];
+                    var designationCell = tr[i].getElementsByTagName("td")[1];
+                    
+                    if (nameCell || designationCell) {
+                        var nameText = nameCell ? nameCell.textContent || nameCell.innerText : "";
+                        var designationText = designationCell ? designationCell.textContent || designationCell.innerText : "";
+                        
+                        // If either name or designation matches the search filter
+                        if (nameText.toUpperCase().indexOf(filter) > -1 || designationText.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].classList.remove("hide");
+                        } else {
+                            tr[i].classList.add("hide");
+                        }
+                    }       
+                }
+            });
+        }
+
+        // DOMContentLoaded event (Optional)
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log("MAKAUT Staff List Page Loaded.");
+        });
+    </script>
+</body>
+</html>

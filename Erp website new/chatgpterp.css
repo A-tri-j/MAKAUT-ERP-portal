@@ -1,0 +1,1182 @@
+/* ===== Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== Header ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #004080;
+  color: white;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+header .logo img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+header .logo-text h2 {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+header .logo-text p {
+  font-size: 12px;
+}
+
+header .admin-login a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 15px;
+  background-color: #2483e3;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+header .admin-login a:hover {
+  background-color: #003366;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  background: url('https://makautwb.ac.in/iem/img/m01.jpg') center/cover no-repeat;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.hero .overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 50px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 20px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ===== Cards Section ===== */
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin: -60px auto 40px auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  color: black;
+  padding: 20px;
+  width: 280px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.card .icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+.card p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.card .card-btn {
+  display: inline-block;
+  background: #0055a5;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card .card-btn:hover {
+  background: #003366;
+}
+
+/* --- Global & Section Styling --- */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f8f8f8; /* Light gray background */
+    margin: 0;
+    padding: 0;
+}
+
+.notice-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* --- Main Heading Styling (h2) --- */
+.notice-section h2 {
+    color: #002b55; /* Dark blue heading */
+    text-align: center;
+    font-size: 2em;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+/* --- Container for Two Columns --- */
+.notice-container {
+    display: flex;
+    justify-content: center;
+    /* --- KEY MODIFICATION: Increased Gap --- */
+    gap: 80px; /* Increased space between the two columns */
+    /* ------------------------------------- */
+    max-width: 900px; 
+    margin: 0 auto;
+    padding: 10px 0; /* Vertical padding only, content elements handle their own boxes */
+}
+
+/* --- Shared Column Styling (Notice Board & Important Dates) --- */
+.notice-board,
+.important-dates {
+    flex: 1; /* Both take up equal space */
+    background-color: #fff; /* White background for individual boxes */
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow around the boxes */
+    max-height: 400px; 
+    overflow-y: auto; /* Enable scroll if content is long */
+}
+
+/* --- Notice Board (Left) Specific Styling --- */
+.notice-board {
+    padding: 15px 0 0 0; /* Padding inside the white box */
+}
+
+.notice-board h3 {
+    color: #002b55; /* Dark blue heading */
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0 20px 15px 20px;
+    margin: 0;
+}
+
+.notice-board ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notice-board li {
+    padding: 8px 20px;
+    font-size: 0.95em;
+    border-bottom: 1px solid #f0f0f0; /* Subtle line between items */
+}
+
+/* Style for the bullet/icon (simulating the red color) */
+.notice-board li::before {
+    content: '• '; /* Use a regular bullet or the emoji if available in HTML */
+    color: #dc3545; /* Red accent color */
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+/* --- Important Dates (Right) Specific Styling --- */
+.important-dates {
+    padding: 0;
+}
+
+.important-dates h3 {
+    color: #333; /* Dark text for Important Dates header */
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Table Styling */
+.important-dates table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    table-layout: fixed;
+}
+
+.important-dates th {
+    /* --- KEY MODIFICATION: Dark Header Background --- */
+    background-color: #002b55; /* Dark blue/navy background */
+    color: #fff; /* White text for header */
+    /* ----------------------------------------------- */
+    text-align: left;
+    padding: 10px 8px;
+    font-weight: bold;
+    border-bottom: 1px solid #002b55;
+}
+
+.important-dates td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee; /* Light line between rows */
+    vertical-align: top;
+    line-height: 1.4;
+}
+
+/* Adjusting the width of the last column for the dates */
+.important-dates th:nth-child(3),
+.important-dates td:nth-child(3) {
+    width: 35%; /* From-To column */
+    font-size: 0.85em; 
+    color: #555;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 850px) {
+    .notice-container {
+        flex-direction: column; /* Stack columns vertically */
+        gap: 30px; /* Reduce gap when stacked */
+        max-width: 90%;
+    }
+
+    .notice-board,
+    .important-dates {
+        max-height: 300px;
+    }
+}
+/* ===== About Section ===== */
+.about {
+  padding: 50px 20px;
+  background: #fff;
+}
+
+.about h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #004080;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.about-text {
+  flex: 1 1 500px;
+}
+
+.about-text p {
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.about-img {
+  flex: 1 1 400px;
+}
+
+.about-img img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* ===== About Section (Extended) ===== */
+.about-section {
+  background-color: #b8c6dc;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-size: 36px;
+  color: #00695c;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.about-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ff9800;
+  margin: 10px auto;
+}
+
+.about-section p {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+/* --- Section Container and Centering --- */
+.about {
+    /* Sets maximum width and centers the content on the page */
+    max-width: 1000px;
+    margin: 50px auto; 
+    padding: 0 20px; 
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* --- Heading Styling --- */
+.about h2 {
+    /* Styles the "About Us" heading */
+    color: #004080; /* Deep blue color */
+    text-align: center; /* Center alignment */
+    font-size: 2.2em;
+    font-weight: bold;
+    margin-bottom: 40px; 
+}
+
+/* --- Two-Column Layout (Text and Image) --- */
+.about-content {
+    display: flex; /* Enables the side-by-side layout */
+    gap: 40px; 
+    align-items: flex-start; /* Aligns content to the top */
+}
+
+/* --- Text Column Styling --- */
+.about-text {
+    flex: 2; /* Gives the text column roughly 66% of the space */
+    font-size: 1.05em;
+}
+
+.about-text p {
+    margin-bottom: 15px; /* Spacing between paragraphs */
+}
+
+/* --- Contact Info Styling (Last Paragraph) --- */
+.about-text p:last-child {
+    /* Targeting the paragraph with the phone and help desk */
+    margin-top: 25px;
+    /* Style the text elements for color */
+    
+    /* Using a hack to target the lines because they're separated by <br> 
+       and we can't easily wrap them in spans in the provided HTML */
+    white-space: pre-line; /* Helps maintain the line breaks */
+    line-height: 2; /* Increases line spacing for visual separation */
+}
+
+/* Targeting the specific lines for color: */
+/* The first line (Call us) is typically a lighter color (pink) */
+.about-text p:last-child {
+    /* The whole block needs styling adjustments */
+    color: #333; /* Reset overall text color */
+}
+
+/* Since the HTML is rigid, we use complex selectors to target the lines: */
+.about-text p:last-child {
+    /* We cannot reliably target the two separate lines with just CSS if they aren't wrapped. 
+       We will style the icons and try to color the first line (phone) */
+    
+    /* Color for the Phone line (Pink) - This is an approximate solution 
+       as CSS can't reliably target text before the <br> without wrappers */
+    color: #e91e63; /* Sets the color for the first line */
+}
+
+.about-text p:last-child br + * {
+    /* Targeting the Help Desk line after the <br> if it were a new element.
+       Since it's not, we'll try to color the second icon and subsequent text. */
+}
+
+/* Style for the icons (phone and chat) */
+.about-text p:last-child .icon {
+    font-size: 1.1em;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* --- Image Placeholder Styling --- */
+.about-img {
+    flex: 1; /* Gives the image column roughly 33% of the space */
+    text-align: center;
+    padding-top: 30px; 
+}
+
+.about-img img {
+    /* This style makes the <img> element look like the placeholder text in the original image */
+    width: 100%;
+    min-height: 150px; 
+    background-color: #f0f0f0; /* Light gray background */
+    border: 1px solid #ccc; /* Subtle border */
+    
+    /* Center the placeholder text */
+    object-fit: contain; 
+    text-align: center;
+    color: #555;
+    font-style: italic;
+    font-size: 1em;
+    
+    /* Overlay text if image is not found/loaded */
+    display: block; 
+    content: attr(alt); /* Shows the alt text "College Group Photo" */
+    line-height: 150px; /* Vertically centers the text */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column; /* Stacks text and image vertically */
+    }
+
+    .about-text,
+    .about-img {
+        flex: 1 1 100%; /* Full width for both */
+        padding-top: 0;
+    }
+}
+
+
+
+.core-values,
+.important-dates {
+  list-style: none;
+  margin: 25px auto;
+  padding: 0;
+  max-width: 500px;
+  text-align: left;
+}
+
+.core-values li,
+.important-dates li {
+  font-size: 18px;
+  padding: 10px 0 10px 30px;
+  position: relative;
+  border-bottom: 1px solid #e0f2f1;
+  transition: background 0.3s;
+}
+
+.core-values li {
+  color: #0d47a1; /* Dark blue */
+}
+
+.core-values li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #43a047; /* Green */
+  font-size: 18px;
+}
+
+.important-dates li {
+  color: #4e342e; /* Rich brown */
+}
+
+.important-dates li::before {
+  content: '🗓️';
+  position: absolute;
+  left: 0;
+  font-size: 18px;
+}
+
+
+/* ===== Admissions Section ===== */
+.admissions-section {
+  padding: 60px 20px;
+  background-color: #e3f2fd;
+  text-align: center;
+}
+
+.admissions-section h2 {
+  font-size: 36px;
+  color: #1565c0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.admissions-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ff9800;
+  margin: 10px auto;
+}
+
+.admissions-section p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.admissions-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 0 auto 30px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admission-process {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.admission-process .process-step:nth-child(4) {
+  grid-column: 1 / -1;
+}
+
+.process-step {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.process-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.process-step h3 {
+  font-size: 22px;
+  margin-top: 15px;
+  color: #ff9800;
+}
+
+.process-step p {
+  font-size: 15px;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* ===== Academic Section ===== */
+.academic-section {
+  padding: 60px 20px;
+  background-color: #e3f2fd;
+  text-align: center;
+}
+
+.academic-section h2 {
+  font-size: 36px;
+  color: #1565c0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.academic-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ff9800;
+  margin: 10px auto;
+}
+
+.academic-section p {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.academics-areas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.area {
+  flex: 1 1 calc(25% - 20px);
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.area:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.academic-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.area h3 {
+  font-size: 22px;
+  color: #2e7d32;
+  margin: 15px 20px 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.area p {
+  font-size: 16px;
+  color: #444;
+  padding: 0 20px 20px;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/* ===== Campus Section ===== */
+.campus-section {
+  padding: 60px 20px;
+  background-color: #e3f2fd;
+  text-align: center;
+}
+
+.campus-section h2 {
+  font-size: 36px;
+  color: #1565c0;
+  margin-bottom: 20px;
+}
+
+.campus-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.campus-grid {
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.campus-grid:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.campus-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.campus-card-content {
+  padding: 20px;
+  text-align: left;
+}
+
+.campus-card-content h3 {
+  font-size: 22px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.campus-card-content p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+
+
+/* Academic Section Styling */
+.academic-section , {
+  padding: 60px 20px;
+  background-color: #e3f2fd;
+}
+
+.academic-section .container, .department-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.academic-section h2, .department-section h2 {
+  font-size: 36px;
+  color: #1565c0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.academic-section h2::after , .department-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ff9800;
+  margin: 10px auto;
+}
+
+.academic-section p, .department-section p {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Grid Container */
+.academics-areas, .department-areas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+/* Each Card */
+.area ,.department-area{
+  flex: 1 1 calc(25% - 20px);
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.area:hover ,.department-area:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Styling */
+.academic-img , .department-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.academic-img:hover, .department-img:hover {
+  transform: scale(1.03);
+}
+
+/* Heading inside each card */
+.area h3 ,.department-area h3{
+  font-size: 22px;
+  color: #2e7d32;
+  margin: 15px 20px 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Text inside each card */
+.area p, .department-area p{
+  font-size: 16px;
+  color: #444;
+  padding: 0 20px 20px;
+  line-height: 1.5;
+  text-align: justify;
+
+}
+
+/* Media Queries for Responsive Layout */
+@media (max-width: 1200px) {
+  .area, .department-area {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 992px) {
+  .area, .department-area {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .area, .department-area {
+    flex: 1 1 100%;
+  }
+}
+
+
+/*Department Section */
+.department-section {
+  padding: 60px 20px;
+  background-color: #f1f8e9;
+}
+
+
+/* ===== Contact Section ===== */
+.contact-section {
+  padding: 60px 20px;
+  background-color: #f0f8ff;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  position: relative;
+}
+
+.contact-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ff9800;
+  margin: 10px auto;
+}
+
+.contact-section p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  padding: 40px 0;
+}
+
+.contact-box {
+  background-color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  text-align: center;
+}
+
+.contact-box h3 {
+  color: #1565c0;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.contact-box p,
+.contact-box a {
+  font-size: 16px;
+  color: #444;
+  text-decoration: none;
+}
+
+.contact-box a:hover {
+  color: #ff9800;
+  text-decoration: underline;
+}
+
+.contact-form {
+  margin-top: 40px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #fff;
+  resize: vertical;
+}
+
+.contact-form button {
+  background-color: #1565c0;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #ff9800;
+  transform: scale(1.05);
+}
+
+.map iframe {
+  width: 100%;
+  height: 450px;
+  border-radius: 8px;
+}
+
+/* ===== Footer ===== */
+footer {
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.social-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 0;
+}
+
+.social-links li {
+  margin: 0 10px;
+}
+
+.social-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ===== Responsive Fixes ===== */
+@media (max-width: 992px) {
+  .admission-process {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .notice-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-img {
+    width: 80%;
+  }
+
+  .admission-process {
+    grid-template-columns: 1fr;
+  }
+
+  .process-img {
+    height: 180px;
+  }
+
+  .campus-areas {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-img {
+    height: 150px;
+  }
+}
+
+
+
+
+
+
+
+
+
+.tagline {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding-left: 0;
+}
+
+.nav-menu li {
+  margin: 0 15px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-menu a:hover {
+  text-decoration: underline;
+  font-weight: 900;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle .bar {
+  height: 4px;
+  width: 25px;
+  background: #fff;
+  margin: 3px 0;
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    flex-direction: column;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 114, 255, 0.9);
+    width: 100%;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #fff;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+
+
+/* --- Base Navigation Styling --- */
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Arranges the main links horizontally */
+  /* background-color: skyblue; Example background for the main nav bar */
+}
+
+.nav-menu li {
+  /* CRITICAL: Establishes the positioning context for the dropdowns */
+  position: relative; 
+}
+
+.nav-menu li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-menu li a:hover {
+  background-color: gray;
+}
+
+/* --- Dropdown Menu Styling (The Pop-up) --- */
+.dropdown-menu {
+  /* Hiding the menu by default */
+  display: none; 
+  
+  /* Positioning the menu */
+  position: absolute; 
+  top: 100%; /* Places the menu just below the main nav item */
+  left: 0; 
+  z-index: 10; /* Ensures it appears on top of other content */
+  
+  /* Appearance */
+  min-width: 220px;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li a {
+  padding: 10px 20px;
+  color: #333; /* Dark text for dropdown links */
+  background-color: white; /* White background for dropdown items */
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0; /* Light hover background */
+}
+
+/* --- The Hover Activation (The "Pop-up" Trigger) --- */
+/* When the parent <li> with class 'dropdown' is hovered, show its child <ul> with class 'dropdown-menu' */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+
+
+

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Registration Process Guide</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        header {
+            background-color: #004d99; /* University Blue */
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -25px -25px 20px -25px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
+            color: #ffcc00; /* Yellow Accent */
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid #ffcc00;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .section h2 {
+            color: #004d99;
+            border-bottom: 2px solid #e6f0ff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Process Steps List Style */
+        .process-steps {
+            list-style: none;
+            padding: 0;
+        }
+        .process-steps li {
+            background-color: #e6f0ff; /* Light Blue background for steps */
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 5px;
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 60px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-size: 1.1em;
+        }
+        .process-steps li strong {
+            color: #004d99;
+        }
+        .process-steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ffcc00; /* Yellow circle */
+            color: #004d99;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        /* Document List Style */
+        .document-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .document-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .document-list li:before {
+            content: "✓";
+            color: #008000; /* Green tick */
+            font-weight: bold;
+            display: inline-block; 
+            width: 25px;
+        }
+
+        /* JavaScript Interactive Element Style */
+        .info-button {
+            background-color: #004d99;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .info-button:hover {
+            background-color: #003366;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>New Student Registration Guide</h1>
+            <p>Academic Year 2025-2026</p>
+        </header>
+
+        <div class="section">
+            <h2>Welcome to the Registration Portal</h2>
+            <p>This process is mandatory for all candidates who have been provisionally admitted to the university. Successful completion ensures your enrollment is confirmed, and you receive your official University Registration Number.</p>
+        </div>
+
+        <div class="section">
+            <h2>Step-by-Step Registration Process</h2>
+            <ul class="process-steps">
+                <li>
+                    <strong>Access the Portal:</strong>
+                    Log in to the official University Registration Portal using your Admission/Application ID and Date of Birth.
+                </li>
+                <li>
+                    <strong>Fill the Registration Form:</strong>
+                    Complete all mandatory fields (Personal Details, Academic History, Contact Information, etc.) accurately.
+                </li>
+                <li>
+                    <strong>Upload Documents:</strong>
+                    Scan and upload all required documents (see checklist below) in the specified format (JPEG/PDF) and size.
+                </li>
+                <li>
+                    <strong>Pay Registration Fee:</strong>
+                    Pay the mandatory one-time registration fee and/or the remaining semester fees through the online payment gateway (Net Banking/Card/UPI). Print the receipt.
+                </li>
+                <li>
+                    <strong>Verify and Submit:</strong>
+                    Review all entries and uploaded documents carefully. Once confirmed, submit the final application and download the 'Registration Acknowledgment Slip'.
+                </li>
+                <li>
+                    <strong>Physical Verification (Offline):</strong>
+                    Report to the designated University department (Registrar/Admissions Office) on the specified date for physical verification of original documents.
+                </li>
+                <li>
+                    <strong>Receive ID:</strong>
+                    Upon successful verification, collect your permanent University Registration Card and Student ID.
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Mandatory Document Checklist (Scanned Copies)</h2>
+            <ul class="document-list">
+                <li>Admission Allotment Letter (Counselling Letter).</li>
+                <li>Class 10th Marksheet and Certificate.</li>
+                <li>Class 12th Marksheet and Certificate.</li>
+                <li>Graduation/Diploma Marksheets (for PG courses).</li>
+                <li>Entrance Exam Scorecard (e.g., JEE/CAT/CET).</li>
+                <li>Caste/EWS Certificate (if applicable).</li>
+                <li>Aadhaar Card / Photo ID Proof.</li>
+                <li>Latest Passport-sized Photograph and Signature (as per specs).</li>
+                <li>Fee Payment Receipt (Online Transaction Slip).</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Need Help?</h2>
+            <p>Click the button below to simulate getting the contact information.</p>
+            <button class="info-button" onclick="showContactInfo()">
+                Click for Technical Support Contact
+            </button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Disclaimer: This is a general guide. Refer to the specific admission notice on your university's official portal for exact dates and fee structures.</p>
+    </footer>
+
+    <script>
+        // JavaScript Section for interactivity
+        function showContactInfo() {
+            var contact = "Technical Support: reg_helpdesk@university.edu\nPhone: (033) 1234-5678\nAvailable: Mon-Fri, 10 AM to 5 PM IST";
+            alert("Registration Contact Details:\n\n" + contact);
+            console.log("Contact information shown to the user.");
+        }
+
+        // Optional: Simple console log on load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log("University Registration Guide Page loaded successfully.");
+        });
+    </script>
+</body>
+</html>
